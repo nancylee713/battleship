@@ -23,4 +23,18 @@ class Cell
     @ship.hit
   end
 
+  def render
+    if fire_upon
+      "."
+    elsif fired_upon? && empty?
+      "M"
+    elsif fired_upon? && @ship != nil
+      "H"
+    elsif fired_upon? && @ship.sunk?
+      "X"
+    else
+      "Error"
+    end
+  end
+
 end
