@@ -2,6 +2,7 @@ require "MiniTest/autorun"
 require "MiniTest/pride"
 require './lib/ship'
 require './lib/cell'
+require 'pry'
 
 class CellTest < MiniTest::Test
 
@@ -54,20 +55,55 @@ class CellTest < MiniTest::Test
   end
 
   def test_it_renders_dot_when_not_fired_upon
-    # skip
+
     @cell_1.place_ship(@cruiser)
+
     assert_equal ".", @cell_1.render
   end
 
   def test_it_renders_M_when_fired_upon_and_no_ship
-    @cell_1.place_ship(@cruiser)
+
+
     @cell_1.fire_upon
+
     assert_equal "M", @cell_1.render
   end
 
-  def test_it_renders_dot_when_not_fired_upon
-    skip
+  def test_it_renders_dot_when_second_cell_is_placed
+
     @cell_1.place_ship(@cruiser)
-    assert_equal ".", @cell_1.render
+    @cell_2.place_ship(@cruiser)
+
+    assert_equal ".", @cell_2.render
+  end
+
+  def test_it_renders_can_accept_an_optional_arguement
+
+    @cell_1.place_ship(@cruiser)
+    @cell_2.place_ship(@cruiser)
+
+    assert_equal "S", @cell_2.render(true)
+  end
+
+  def test_it_renders_can_accept_an_optional_arguement
+skip
+    @cell_1.place_ship(@cruiser)
+    @cell_2.place_ship(@cruiser)
+    @cell_2.fire_upon
+
+
+    #Would need fire_upon true and @ship = cruise?
+    assert_equal "H", @cell_2.render
+  end
+
+  def test_it_renders_X
+skip
+    @cell_1.place_ship(@cruiser)
+    @cell_2.place_ship(@cruiser)
+    @cell_2.fire_upon
+    @cell_2.fire_upon
+    @cell_2.fire_upon
+
+    assert_equal "X", @cell_2.render
   end
 end
