@@ -25,4 +25,8 @@ class Board
     @board
   end
 
+  def valid_coordinate?(coord)
+    cells.keys.include? coord  
+  end
+
 end
