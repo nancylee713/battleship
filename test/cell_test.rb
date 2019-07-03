@@ -3,6 +3,7 @@ require "MiniTest/pride"
 require './lib/ship'
 require './lib/cell'
 
+# require 'pry'
 class CellTest < MiniTest::Test
 
   def setup
@@ -54,20 +55,30 @@ class CellTest < MiniTest::Test
   end
 
   def test_it_renders_dot_when_not_fired_upon
-    # skip
-    @cell_1.place_ship(@cruiser)
     assert_equal ".", @cell_1.render
   end
 
   def test_it_renders_M_when_fired_upon_and_no_ship
-    @cell_1.place_ship(@cruiser)
     @cell_1.fire_upon
     assert_equal "M", @cell_1.render
   end
 
-  def test_it_renders_dot_when_not_fired_upon
-    skip
+  def test_it_renders_H_when_fired_upon_and_ship_placed
     @cell_1.place_ship(@cruiser)
-    assert_equal ".", @cell_1.render
+    @cell_1.fire_upon
+    assert_equal "H", @cell_1.render
+  end
+
+  def test_it_renders_X_when_fired_upon_and_ship_sunk
+    @cell_1.place_ship(@cruiser)
+    @cell_1.fire_upon
+    @cell_1.fire_upon
+    @cell_1.fire_upon
+    assert_equal "X", @cell_1.render
+
+    def test_it_renders_H_when_fired_upon_and_ship_placed
+      @cell_1.place_ship(@cruiser)
+      assert_equal "S", @cell_1.render
+    end
   end
 end
