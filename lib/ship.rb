@@ -2,10 +2,11 @@ class Ship
 
   attr_reader :name, :length, :health
 
-  def initialize(name, length, health=3)
+  def initialize(name, length)
     @name = name
     @length = length
-    @health = health
+    #should the health be the same as the ship length?
+    @health = length
     @sunk = false
   end
 
