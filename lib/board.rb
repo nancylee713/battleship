@@ -32,8 +32,13 @@ class Board
    #checks if array of coordinates are all valid
    #check if array of coordinates are consectuive
       #check is ship.length = length of coordinate array
-      #check if array is consectuive [A1, A2, A3]
-      #check if array value in order
+      #horitonia
+      #parse key string of cell hash "A1" becomes "A" and "1"
+      #@coordinates.slice(0) Letter
+      #@coordinate.slice(1) Number --> [1,2,3]
+      #array = [1,2,4,3]
+      #array.sort.each_cons(2).all? { |x,y| y == x + 1 }
+
 
   end
 
