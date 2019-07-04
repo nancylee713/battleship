@@ -8,6 +8,8 @@ class BoardTest < MiniTest::Test
 
   def setup
   @board = Board.new
+  @cruiser = Ship.new("Cruiser", 3)
+  @submarine = Ship.new("Submarine", 2)
   end
 
   def test_it_exists
@@ -28,5 +30,11 @@ class BoardTest < MiniTest::Test
   refute @board.valid_coordinate?("E1")
   refute @board.valid_coordinate?("A22")
 
+  end
+
+  def test_valid_placement_method
+
+  refute @board.valid_placement?(cruiser, ["A1", "A2"])
+  reture @board.valid_placement?(submarine, ["A2", "A3", "A4"])
   end
 end

@@ -27,6 +27,15 @@ class Board
     @cells.key?(coordinate)
   end
 
-  def
+  def valid_placement?(ship, coordinates)
+   #take in argument "ship" and array of coordinates
+   #checks if array of coordinates are all valid
+   #check if array of coordinates are consectuive
+      #check is ship.length = length of coordinate array
+      #check if array is consectuive [A1, A2, A3]
+      #check if array value in order
+
+  end
+
 
   end
