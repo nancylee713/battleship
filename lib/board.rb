@@ -27,20 +27,27 @@ class Board
     @cells.key?(coordinate)
   end
 
+
   def valid_placement?(ship, coordinates)
-   #take in argument "ship" and array of coordinates
-   #checks if array of coordinates are all valid
-   #check if array of coordinates are consectuive
-      #check is ship.length = length of coordinate array
-      #horitonia
-      #parse key string of cell hash "A1" becomes "A" and "1"
-      #@coordinates.slice(0) Letter
-      #@coordinate.slice(1) Number --> [1,2,3]
-      #array = [1,2,4,3]
-      #array.sort.each_cons(2).all? { |x,y| y == x + 1 }
+    if coordinate.valid_coordinate?
+      #how know what ship length is?
+      if ship.length == coordinates.length
+        if coordinates.slice(0).unique == 1 && coordinates.slice(1).each_con(1).all?
+          "Valid"
 
+          elsif coordinates.slice(1).unique == 1 && coordinates.slice(0).ord.each_con(1).all?
+            "Valid"
 
+          else
+          "Invalid"
+        end
+
+      else
+        "Invalid"
+      end
+
+    else
+      "Invalid"
+    end
   end
-
-
-  end
+end
