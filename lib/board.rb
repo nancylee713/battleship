@@ -1,3 +1,4 @@
+require "pry"
 class Board
 
   attr_reader :cells
@@ -32,21 +33,27 @@ class Board
   end
 
   def find_second_coord_element(coordinates)
-    second_coord_elements = coordinates.map { |coordinate| coordinate.slice(1)}
+    second_coord_elements = coordinates.map { |coordinate| coordinate.slice(1).to_i}
   end
 
+  def check_consecutive(values)
+    values.each_cons(2).all? { |x,y| y == x + 1 }
+  end
 
 
   def valid_placement?(ship, coordinates)
 
    if coordinates.all? { |coordinate| valid_coordinate?(coordinate)}
+
      if ship.length == coordinates.length
          #Not working, need to determine if values are consecutive
-      if find_first_coord_element(coordinates).uniq == 1 && find_second_coord_element(coordinates).each_con(1)???
+
+      if find_first_coord_element(coordinates).uniq.length == 1 && check_consecutive(find_second_coord_element(coordinates)
          true
         #Not working, need to determine if values are consecutive
-      elsif find_second_coord_element(coordinates).uniq == 1 && find_first_coord_element(coordinates).each_con(1)???
+      elsif find_second_coord_element(coordinates).uniq.length == 1 && check_consecutive(find_first_coord_element(coordinates))
         true
+
       else
         false
       end
