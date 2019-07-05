@@ -11,6 +11,7 @@ class BoardTest < MiniTest::Test
   @board = Board.new
   @cruiser = Ship.new("Cruiser", 3)
   @submarine = Ship.new("Submarine", 2)
+
   end
 
   def test_it_exists
@@ -19,8 +20,8 @@ class BoardTest < MiniTest::Test
   end
 
   def test_it_returns_all_cell_values
-  skip
-  assert_equal test, @board.cells
+    skip
+  assert_equal  UNKNOWN ,@board.cells
   end
 
   def test_it_cell_has_valid_coorinates
@@ -36,6 +37,6 @@ class BoardTest < MiniTest::Test
   def test_valid_placement_method
 
   refute @board.valid_placement?(@cruiser, ["A1", "A2"])
-  reture @board.valid_placement?(@submarine, ["A2", "A3", "A4"])
+  refute @board.valid_placement?(@submarine, ["A2", "A3", "A4"])
   end
 end
