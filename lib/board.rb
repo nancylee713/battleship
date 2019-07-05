@@ -1,9 +1,9 @@
 class Board
 
-  attr_reader :board
+  attr_reader :cells
 
-  def initialize(board={})
-    @board = board
+  def initialize
+    @cells = {}
   end
 
   def make_coordinates
@@ -19,10 +19,10 @@ class Board
 
   def cells
     make_coordinates.each do |coord|
-      @board.store(coord, Cell.new(coord))
+      @cells.store(coord, Cell.new(coord))
     end
 
-    @board
+    @cells
   end
 
   def valid_coordinate?(coord)
@@ -40,4 +40,10 @@ class Board
       false
     end
   end
+
+  def place(ship, arr_of_coords)
+    # if coordinates match,
+    @cells[coord]
+  end
+
 end
