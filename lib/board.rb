@@ -1,67 +1,48 @@
-require "pry"
 class Board
 
   attr_reader :cells
 
   def initialize
-    @cells = {
-              "A1" => Cell.new("A1"),
-              "A2" => Cell.new("A2"),
-              "A3" => Cell.new("A3"),
-              "A4" => Cell.new("A4"),
-              "B1" => Cell.new("B1"),
-              "B2" => Cell.new("B2"),
-              "B3" => Cell.new("B3"),
-              "B4" => Cell.new("B4"),
-              "C1" => Cell.new("C1"),
-              "C2" => Cell.new("C2"),
-              "C3" => Cell.new("C3"),
-              "C4" => Cell.new("C4"),
-              "D1" => Cell.new("D1"),
-              "D2" => Cell.new("D2"),
-              "D3" => Cell.new("D3"),
-              "D4" => Cell.new("D4")
-              }
-            end
-
-  def valid_coordinate?(coordinate)
-    @cells.key?(coordinate)
+    @cells = {}
   end
 
-  def find_first_coord_element(coordinates)
-    first_coord_elements = coordinates.map { |coordinate| coordinate.slice(0).ord}
+  def make_coordinates
+    cell_chars = %w[A B C D]
+    cell_nums = %w[1 2 3 4]
+
+    arr_coordinates = cell_chars.map do |char|
+      cell_nums.map do |num|
+        char + num
+      end
+    end.flatten
   end
 
-  def find_second_coord_element(coordinates)
-    second_coord_elements = coordinates.map { |coordinate| coordinate.slice(1).to_i}
+  def cells
+    make_coordinates.each do |coord|
+      @cells.store(coord, Cell.new(coord))
+    end
+
+    @cells
   end
 
-  def check_consecutive(values)
-    values.each_cons(2).all? { |x,y| y == x + 1 }
+  def valid_coordinate?(coord)
+    cells.keys.include? coord
   end
 
-
-  def valid_placement?(ship, coordinates)
-
-   if coordinates.all? { |coordinate| valid_coordinate?(coordinate)}
-
-     if ship.length == coordinates.length
-         #Not working, need to determine if values are consecutive
-
-      if find_first_coord_element(coordinates).uniq.length == 1 && check_consecutive(find_second_coord_element(coordinates)
-         true
-        #Not working, need to determine if values are consecutive
-      elsif find_second_coord_element(coordinates).uniq.length == 1 && check_consecutive(find_first_coord_element(coordinates))
-        true
-
-      else
-        false
+  def valid_placement?(ship, arr_of_coords)
+    # first check if arr_of_coords are valid coordinates and match ship length
+    if (arr_of_coords - make_coordinates).empty? && ship.length == arr_of_coords.length
+      arr_of_coords.each_cons(2).all? do |coord_1, coord_2|
+        # horizontally || vertically
+        coord_1[0] == coord_2[0] && coord_2[1].to_i == coord_1[1].to_i + 1 || coord_1[1] == coord_2[1] && coord_2[0].ord == coord_1[0].ord + 1
       end
     else
       false
     end
-  else
-    false
   end
-end
+
+  def place(ship, arr_of_coords)
+    # if coordinates match,
+    @cells[coord]
+  end
 end
