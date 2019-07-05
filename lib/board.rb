@@ -46,20 +46,21 @@ class Board
    if coordinates.all? { |coordinate| valid_coordinate?(coordinate)}
 
      if ship.length == coordinates.length
-         #Not working, need to determine if values are consecutive
 
-      if find_first_coord_element(coordinates).uniq.length == 1 && check_consecutive(find_second_coord_element(coordinates)
-         true
-        #Not working, need to determine if values are consecutive
+      if find_first_coord_element(coordinates).uniq.length == 1 && check_consecutive(find_second_coord_element(coordinates))
+        true
+
       elsif find_second_coord_element(coordinates).uniq.length == 1 && check_consecutive(find_first_coord_element(coordinates))
         true
 
       else
         false
       end
+
     else
       false
     end
+
   else
     false
   end

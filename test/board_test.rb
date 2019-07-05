@@ -11,34 +11,52 @@ class BoardTest < MiniTest::Test
   @board = Board.new
   @cruiser = Ship.new("Cruiser", 3)
   @submarine = Ship.new("Submarine", 2)
+  #@board.place(@cruiser, ["A1", "A2", "A3"])
 
   end
 
-  # def test_it_exists
-  #
-  # assert_instance_of Board, @board
-  # end
-  #
-  # def test_it_returns_all_cell_values
-  #   skip
-  # assert_equal  UNKNOWN ,@board.cells
-  # end
-  #
-  # def test_it_cell_has_valid_coorinates
-  #
-  # assert @board.valid_coordinate?("A1")
-  # assert @board.valid_coordinate?("D4")
-  # refute @board.valid_coordinate?("A5")
-  # refute @board.valid_coordinate?("E1")
-  # refute @board.valid_coordinate?("A22")
-  #
-  # end
+  def test_it_exists
+
+  assert_instance_of Board, @board
+  end
+
+  def test_board_is_hash
+    assert @board.cells.instance_of? Hash
+  end
+
+  def test_it_returns_all_cell_values
+    skip
+  assert_equal  UNKNOWN ,@board.cells
+  end
+
+  def test_it_cell_has_valid_coorinates
+
+  assert @board.valid_coordinate?("A1")
+  assert @board.valid_coordinate?("D4")
+  refute @board.valid_coordinate?("A5")
+  refute @board.valid_coordinate?("E1")
+  refute @board.valid_coordinate?("A22")
+  end
 
   def test_valid_placement_method
 
-
-  #refute @board.valid_placement?(@cruiser, ["A1", "A2"])
-  #refute @board.valid_placement?(@submarine, ["A2", "A3", "A4"])
+  refute @board.valid_placement?(@cruiser, ["A1", "A2"])
+  refute @board.valid_placement?(@submarine, ["A2", "A3", "A4"])
   assert_equal true, @board.valid_placement?(@cruiser, ["A1", "A2", "A3"])
+  refute @board.valid_placement?(@cruiser, ["C1", "A2", "A3"])
+  refute @board.valid_placement?(@cruiser, ["A1", "A2", "A4"])
+  refute @board.valid_placement?(@submarine, ["A1", "C1"])
+  refute @board.valid_placement?(@cruiser, ["A3", "A2", "A1"])
+  refute @board.valid_placement?(@submarine, ["C1", "B1"])
+  refute @board.valid_placement?(@cruiser, ["A1", "B2", "C3"])
+  refute @board.valid_placement?(@submarine, ["C2", "D3"])
+  assert @board.valid_placement?(@submarine, ["A1", "A2"])
+  assert @board.valid_placement?(@cruiser, ["B1", "C1", "D1"])
+  assert @board.valid_placement?(@cruiser, ["D1", "D2", "D3"])
   end
+
+  def test_ship_can_be_placed
+skip
+  end
+
 end
