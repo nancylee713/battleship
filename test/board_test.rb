@@ -72,19 +72,17 @@ class BoardTest < MiniTest::Test
   end
 
   def test_board_can_place_a_ship_in_cells
-    skip
+
     @board.place(@cruiser, ["A1", "A2", "A3"])
     cell_1 = @board.cells["A1"]
     cell_2 = @board.cells["A2"]
     cell_3 = @board.cells["A3"]
 
-    assert_equal Cell.new("A1"), @board.cells["A1"]
-    assert_equal Cell.new("A2"), @board.cells["A2"]
-    assert_equal Cell.new("A3"), @board.cells["A3"]
+    assert_equal @cruiser, cell_1.ship
   end
 
   def test_multiple_cells_contain_the_same_ship
-    # skip
+
     @board.place(@cruiser, ["A1", "A2", "A3"])
     cell_1 = @board.cells["A1"]
     cell_2 = @board.cells["A2"]
@@ -94,4 +92,12 @@ class BoardTest < MiniTest::Test
     assert_equal @cruiser, cell_2.ship
     assert cell_3.ship == cell_2.ship
   end
+
+  def test_ships_do_not_over_lap
+    @board.place(cruiser, ["A1", "A2", "A3"])
+
+    refute board.valid_placement?(submarine, ["A1", "B1"])
+  end
+
+
 end
