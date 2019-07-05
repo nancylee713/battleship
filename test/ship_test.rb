@@ -63,7 +63,6 @@ class ShipTest < MiniTest::Test
     @submarine.hit
 
     assert_equal 0, @submarine.health
-
   end
 
 end

@@ -5,8 +5,8 @@ class Ship
   def initialize(name, length)
     @name = name
     @length = length
-    #should the health be the same as the ship length?
     @health = length
+    #health now set to legth
     @sunk = false
   end
 
