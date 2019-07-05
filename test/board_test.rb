@@ -64,5 +64,10 @@ class BoardTest < MiniTest::Test
     assert @board.valid_placement?(@cruiser, ["A1", "B1", "C1"])
     assert @board.valid_placement?(@cruiser, ["B2", "B3", "B4"])
     assert @board.valid_placement?(@cruiser, ["B2", "C2", "D2"])
+
+    refute @board.valid_placement?(@submarine, ["E2", "F2"])
+    refute @board.valid_placement?(@submarine, ["E5", "E6"])
+    refute @board.valid_placement?(@cruiser, ["E2", "F2", "G2"])
+    refute @board.valid_placement?(@cruiser, ["E5", "E6", "E7"])
   end
 end
