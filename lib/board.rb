@@ -45,5 +45,4 @@ class Board
     # if coordinates match,
     @cells[coord]
   end
-
 end
