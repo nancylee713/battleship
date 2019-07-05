@@ -24,30 +24,33 @@ class Board
             end
 
   def valid_coordinate?(coordinate)
+    #does this method need to handle more than one coordinate
     @cells.key?(coordinate)
   end
 
 
+
   def valid_placement?(ship, coordinates)
-    if coordinate.valid_coordinate?
+    #how to write if all coordinates are valid true
+    if coordinates.any? do each something valid_coordinate?
       #how know what ship length is?
-      if ship.length == coordinates.length
+      if @ship.length == coordinates.length
         if coordinates.slice(0).unique == 1 && coordinates.slice(1).each_con(1).all?
-          "Valid"
+          true
 
           elsif coordinates.slice(1).unique == 1 && coordinates.slice(0).ord.each_con(1).all?
-            "Valid"
+            true
 
           else
-          "Invalid"
+          false
         end
 
       else
-        "Invalid"
+        false
       end
 
     else
-      "Invalid"
+      false
     end
   end
 end
