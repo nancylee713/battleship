@@ -20,6 +20,9 @@ class ShipTest < MiniTest::Test
     refute @cruiser.sunk?
 
     assert_equal "Submarine", @submarine.name
+    assert_equal 2, @submarine.length
+    assert_equal 2, @submarine.health
+    refute @cruiser.sunk?
   end
 
   def test_hit_decreases_health_by_1
