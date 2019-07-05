@@ -1,9 +1,9 @@
-
-require 'MiniTest/autorun'
-require 'MiniTest/pride'
-require './lib/ship'
-require './lib/cell'
+require "MiniTest/autorun"
+require "MiniTest/pride"
 require './lib/board'
+require './lib/cell'
+require './lib/ship'
+
 require 'pry'
 
 class BoardTest < MiniTest::Test
@@ -20,6 +20,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_board_is_a_hash
+
     assert_equal Hash, @board.cells.class
   end
 
@@ -71,20 +72,10 @@ class BoardTest < MiniTest::Test
     refute @board.valid_placement?(@cruiser, ["E5", "E6", "E7"])
   end
 
-  def test_board_can_place_a_ship_in_cells
-    skip
-    @board.place(@cruiser, ["A1", "A2", "A3"])
-    cell_1 = @board.cells["A1"]
-    cell_2 = @board.cells["A2"]
-    cell_3 = @board.cells["A3"]
-
-    assert_equal Cell.new("A1"), @board.cells["A1"]
-    assert_equal Cell.new("A2"), @board.cells["A2"]
-    assert_equal Cell.new("A3"), @board.cells["A3"]
-  end
-
-  def test_multiple_cells_contain_the_same_ship
+  def test_ship_is_placed_and_multiple_cells_can_contain_the_same_ship
     # skip
+    binding.pry
+
     @board.place(@cruiser, ["A1", "A2", "A3"])
     cell_1 = @board.cells["A1"]
     cell_2 = @board.cells["A2"]
