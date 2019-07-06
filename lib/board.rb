@@ -70,7 +70,7 @@ class Board
     end
   end
 
-  def render(show=false)
+  def render(display_ship=false)
     # Still working: optional argument whether to show hidden ships or not
 
     # 1. Create an array of dots (initial cell status) by calling .render on each cell object
@@ -89,7 +89,11 @@ class Board
     game_board = []
 
     @cells.each_pair do |k, v|
-      rows << v.render
+      if display_ship == false && v.render == 'S'
+        rows << '.'
+      else
+        rows << v.render
+      end
     end
 
     # Processing ============
@@ -97,8 +101,8 @@ class Board
       .flatten
       .unshift("")
       .each_slice(5) { |row| game_board << row.join(' ') }
-      game_board.tap(&:pop).map { |e| e + " " }.join("\n") + "\n"
 
-  end
+      game_board.tap(&:pop).map { |e| e + " " }.join("\n") + "\n"
+    end
 
 end
