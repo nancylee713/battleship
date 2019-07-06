@@ -1,3 +1,5 @@
+require './lib/cell'
+
 class Board
 
   attr_reader :cells
@@ -32,11 +34,8 @@ class Board
 
   def valid_placement?(ship, arr_of_coords)
     # first check if arr_of_coords are valid coordinates and match ship length
-      placed_value_cell_obj = @cells.values_at(arr_of_coords)
-
-    if placed_value_cell_obj.all? do |coords|
-        ship = nil
-      end
+    #  placed_value_cell_obj = @cells.values_at(arr_of_coords)
+    if arr_of_coords.any? { |coords| !@cells.values_at(coords).empty? }
       if (arr_of_coords - make_coordinates).empty? && ship.length == arr_of_coords.length
         arr_of_coords.each_cons(2).all? do |coord_1, coord_2|
           # horizontally || vertically
@@ -45,8 +44,6 @@ class Board
       else
         false
       end
-    else
-      false
     end
   end
 
@@ -60,5 +57,4 @@ class Board
       end
     end
   end
-
 end
