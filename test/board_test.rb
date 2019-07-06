@@ -108,7 +108,7 @@ class BoardTest < MiniTest::Test
     assert @board.valid_placement?(@submarine, ["D2", "D3"])
   end
 
-  def test_board_renders_with_proper_symbols
+  def test_initial_board_renders_with_dots
     initial_board = [
       " 1 2 3 4 ",
       "A . . . . ",
@@ -118,7 +118,9 @@ class BoardTest < MiniTest::Test
     ].join("\n") + "\n"
 
     assert_equal initial_board, @board.render
+  end
 
+  def test_board_shows_when_ships_are_loaded
     @board.place(@cruiser, ["A1", "A2", "A3"])
 
     cruiser_in_board = [
@@ -129,7 +131,7 @@ class BoardTest < MiniTest::Test
       "D . . . . "
     ].join("\n") + "\n"
 
-    assert_equal cruiser_in_board, @board.render
+    assert_equal cruiser_in_board, @board.render(true)
 
     @board.place(@submarine, ["C1", "D1"])
 
@@ -141,6 +143,28 @@ class BoardTest < MiniTest::Test
       "D S . . . "
     ].join("\n") + "\n"
 
-    assert_equal submarine_in_board, @board.render
+    assert_equal submarine_in_board, @board.render(true)
   end
+
+  def test_board_shows_Hs_and_Ms
+    skip
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    @board.place(@submarine, ["C1", "D1"])
+
+    @board.cells["A1"].fire_upon
+    @board.cells["B4"].fire_upon
+    @board.cells["C1"].fire_upon
+    @board.cells["D1"].fire_upon
+
+    hits_and_misses_in_board = [
+      " 1 2 3 4 ",
+      "A H S S . ",
+      "B . . . . ",
+      "C X . . . ",
+      "D X . . . "
+    ].join("\n") + "\n"
+
+    assert_equal hits_and_misses_in_board, @board.render
+  end
+
 end

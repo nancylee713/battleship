@@ -70,7 +70,7 @@ class Board
     end
   end
 
-  def render(hidden=false)
+  def render(show=false)
     # Still working: optional argument whether to show hidden ships or not
 
     # 1. Create an array of dots (initial cell status) by calling .render on each cell object
@@ -82,6 +82,7 @@ class Board
     # 7. Remove the trailing 'nil' & add a whitespace at the end of each row.
     # 8. Finally join them with a newline as a delimiter to match the exact grid format.
 
+    # Setup ============
     cell_chars = %w[A B C D]
     cell_nums = %w[1 2 3 4]
     rows = []
@@ -91,13 +92,13 @@ class Board
       rows << v.render
     end
 
-    (cell_nums + rows).each_slice(4)
-    .zip(cell_chars)
-    .flatten
-    .unshift("")
-    .each_slice(5) { |row| game_board << row.join(' ') }
+    # Processing ============
+      (cell_nums + rows).each_slice(4).zip(cell_chars)
+      .flatten
+      .unshift("")
+      .each_slice(5) { |row| game_board << row.join(' ') }
+      game_board.tap(&:pop).map { |e| e + " " }.join("\n") + "\n"
 
-    game_board.tap(&:pop).map { |e| e + " " }.join("\n") + "\n"
   end
 
 end
