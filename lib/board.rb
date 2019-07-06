@@ -45,30 +45,19 @@ class Board
     end
   end
 
-  #look at arr_of_coords... find those coords as keys in cell hash... look at those keys values
-  #determine if those cell objects (value) DO NOT have a ship object --> are empty?
-  # example cell objects
-  # "A3"=> <Cell:0x007fe924217f90 @coordinate="A3", @fired_upon=false, @ship=#<Ship:0x007fe9242462a0 @health=3, @length=3, @name="Dickbutt", @sunk=false>>,
-  # "A4"=> #<Cell:0x007fe924217f40 @coordinate="A4", @fired_upon=false, @ship=nil>
-  def ship_not_already_placed?(arr_of_coords)
-    # arr of cords = ["A1", "A2", "A3"]
-    # check cell hash for matching key with arr_of_coords
-    not_placed = true
 
+  def ship_not_already_placed?(arr_of_coords)
+    not_placed = true
     arr_of_coords.each do |coord|
-      # coord = "A1"
-      # @cells = { "A1" => {Cell object}, ...}
       if @cells[coord].ship == nil
-        p "no ship at coordinate"
       else
         not_placed = false
-        p "ship already here"
         return
       end
     end
-
     not_placed
   end
+
 
   def place(ship, coords)
     # check if given coordinates are valid & ship length matches
@@ -80,4 +69,14 @@ class Board
       end
     end
   end
+
+  def render
+    #puts five lines
+    #puts first lines with 1..4
+    #puts second line with A and cell_object.render? all cell with "A" coords
+    #puts third line with B and cell_object.render? all cell with "B" coords
+    #puts third line with C and cell_object.render? all cell with "C" coords
+    #puts third line with D and cell_object.render? all cell with "D" coords
+  end
+
 end

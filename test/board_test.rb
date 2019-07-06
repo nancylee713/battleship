@@ -13,6 +13,8 @@ class BoardTest < MiniTest::Test
     @cell = Cell.new("A1")
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
+    @tester_ship_1 = Ship.new("Tester_Ship_1",2)
+    @tester_ship_2 = Ship.new("Tester_Ship_2",2)
   end
 
   def test_it_exists
@@ -98,5 +100,8 @@ class BoardTest < MiniTest::Test
     @board.place(@cruiser, ["A1", "A2", "A3"])
 
     refute @board.valid_placement?(@submarine, ["A1", "B1"])
+    refute @board.valid_placement?(@tester_ship_1, ["A2", "B2"])
+    assert @board.valid_placement?(@tester_ship_2, ["B1", "C1"])
+    assert @board.valid_placement?(@submarine, ["D2", "D3"])
   end
 end
