@@ -34,8 +34,8 @@ class Board
   # end
 
   def valid_placement?(ship, arr_of_coords)
+    if (arr_of_coords - make_coordinates).empty? && ship.length == arr_of_coords.length
     if ship_not_already_placed?(arr_of_coords)
-      if (arr_of_coords - make_coordinates).empty? && ship.length == arr_of_coords.length
         arr_of_coords.each_cons(2).all? do |coord_1, coord_2|
           # horizontally || vertically
           coord_1[0] == coord_2[0] && coord_2[1].to_i == coord_1[1].to_i + 1 ||
@@ -54,6 +54,7 @@ class Board
     # arr of cords = ["A1", "A2", "A3"]
     # check cell hash for matching key with arr_of_coords
     not_placed = true
+
     arr_of_coords.each do |coord|
       # coord = "A1"
       # @cells = { "A1" => {Cell object}, ...}
