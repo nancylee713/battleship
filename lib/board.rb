@@ -73,10 +73,10 @@ class Board
   def render
     #puts five lines
     #puts first lines with 1..4
-    #puts second line with A and cell_object.render? all cell with "A" coords
-    #puts third line with B and cell_object.render? all cell with "B" coords
-    #puts third line with C and cell_object.render? all cell with "C" coords
-    #puts third line with D and cell_object.render? all cell with "D" coords
+    #puts second line with A and cell_object.render? all cells with "A" coords
+    #puts third line with B and cell_object.render? all cells with "B" coords
+    #puts third line with C and cell_object.render? all cells with "C" coords
+    #puts third line with D and cell_object.render? all cells with "D" coords
   end
 
 end
