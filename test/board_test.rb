@@ -32,6 +32,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_coordinate_is_valid
+    skip
     assert @board.valid_coordinate?("A1")
     assert @board.valid_coordinate?("D4")
     refute @board.valid_coordinate?("A5")
@@ -98,6 +99,4 @@ class BoardTest < MiniTest::Test
 
     refute @board.valid_placement?(@submarine, ["A1", "B1"])
   end
-
-
 end
