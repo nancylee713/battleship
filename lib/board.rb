@@ -70,13 +70,35 @@ class Board
     end
   end
 
-  def render
-    #puts five lines
-    #puts first lines with 1..4
-    #puts second line with A and cell_object.render? all cells with "A" coords
-    #puts third line with B and cell_object.render? all cells with "B" coords
-    #puts third line with C and cell_object.render? all cells with "C" coords
-    #puts third line with D and cell_object.render? all cells with "D" coords
+  def render(show=false)
+    # Still working: optional argument whether to show hidden ships or not
+
+    # 1. Create an array of dots (initial cell status) by calling .render on each cell object
+    # 2. Create an array of subarrays that represent each row on the board (i.e., game_board)
+    # 3. Add a top layer (i.e., cell_num) to the array of dots.
+    # 4. Insert alphabet (i.e., cell_char) after every 4th element.
+    # 5. Flatten the resulting array and insert a whitespace at index 0.
+    # 6. Slice the array into 5 rows, then transform each row as a string.
+    # 7. Remove the trailing 'nil' & add a whitespace at the end of each row.
+    # 8. Finally join them with a newline as a delimiter to match the exact grid format.
+
+    # Setup ============
+    cell_chars = %w[A B C D]
+    cell_nums = %w[1 2 3 4]
+    rows = []
+    game_board = []
+
+    @cells.each_pair do |k, v|
+      rows << v.render
+    end
+
+    # Processing ============
+      (cell_nums + rows).each_slice(4).zip(cell_chars)
+      .flatten
+      .unshift("")
+      .each_slice(5) { |row| game_board << row.join(' ') }
+      game_board.tap(&:pop).map { |e| e + " " }.join("\n") + "\n"
+
   end
 
 end
