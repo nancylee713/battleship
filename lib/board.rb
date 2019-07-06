@@ -70,13 +70,21 @@ class Board
     end
   end
 
-  def render
+  def render(hidden=false)
     #puts five lines
     #puts first lines with 1..4
     #puts second line with A and cell_object.render? all cells with "A" coords
     #puts third line with B and cell_object.render? all cells with "B" coords
     #puts third line with C and cell_object.render? all cells with "C" coords
     #puts third line with D and cell_object.render? all cells with "D" coords
+    # optional argument whether to show hidden ships or not
+    if hidden == true
+    else
+      "  1 2 3 4 \n" +
+      "A . . . . \n" +
+      "B . . . . \n" +
+      "C . . . . \n" +
+      "D . . . . \n"
   end
 
 end
