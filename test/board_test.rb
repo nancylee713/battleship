@@ -109,7 +109,38 @@ class BoardTest < MiniTest::Test
   end
 
   def test_board_renders_with_proper_symbols
+    initial_board = [
+      " 1 2 3 4 ",
+      "A . . . . ",
+      "B . . . . ",
+      "C . . . . ",
+      "D . . . . "
+    ].join("\n") + "\n"
+
+    assert_equal initial_board, @board.render
+
     @board.place(@cruiser, ["A1", "A2", "A3"])
-    assert_equal " 1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n", @board.render
+
+    cruiser_in_board = [
+      " 1 2 3 4 ",
+      "A S S S . ",
+      "B . . . . ",
+      "C . . . . ",
+      "D . . . . "
+    ].join("\n") + "\n"
+
+    assert_equal cruiser_in_board, @board.render
+
+    @board.place(@submarine, ["C1", "D1"])
+
+    submarine_in_board = [
+      " 1 2 3 4 ",
+      "A S S S . ",
+      "B . . . . ",
+      "C S . . . ",
+      "D S . . . "
+    ].join("\n") + "\n"
+
+    assert_equal submarine_in_board, @board.render
   end
 end
