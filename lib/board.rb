@@ -80,11 +80,14 @@ class Board
     # optional argument whether to show hidden ships or not
     if hidden == true
     else
-      "  1 2 3 4 \n" +
-      "A . . . . \n" +
-      "B . . . . \n" +
-      "C . . . . \n" +
-      "D . . . . \n"
+      game = [
+        " 1 2 3 4 ",
+        "A . . . . ",
+        "B . . . . ",
+        "C . . . . ",
+        "D . . . . "
+      ].join("\n") + "\n"
+    end
   end
 
 end

@@ -110,7 +110,6 @@ class BoardTest < MiniTest::Test
 
   def test_board_renders_with_proper_symbols
     @board.place(@cruiser, ["A1", "A2", "A3"])
-
-    assert_equal "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n" , @board.render
+    assert_equal " 1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n", @board.render
   end
 end
