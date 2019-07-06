@@ -104,4 +104,9 @@ class BoardTest < MiniTest::Test
     assert @board.valid_placement?(@tester_ship_2, ["B1", "C1"])
     assert @board.valid_placement?(@submarine, ["D2", "D3"])
   end
+
+  def test_board_renders_with_proper_symbols
+    @board.place(cruiser, ["A1", "A2", "A3"])
+
+    assert_equal "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n" ,board.render
 end
