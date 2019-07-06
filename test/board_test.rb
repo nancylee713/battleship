@@ -1,8 +1,9 @@
-require "MiniTest/autorun"
-require "MiniTest/pride"
-require './lib/board'
-require './lib/cell'
+
+require 'MiniTest/autorun'
+require 'MiniTest/pride'
 require './lib/ship'
+require './lib/cell'
+require './lib/board'
 
 require 'pry'
 
@@ -10,9 +11,11 @@ class BoardTest < MiniTest::Test
 
   def setup
     @board = Board.new
-    @cell = Cell.new("A1")
+    @cell = Cell.new("A1")q
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
+    @tester_ship_1 = Ship.new("Tester_Ship_1",2)
+    @tester_ship_2 = Ship.new("Tester_Ship_2",2)
   end
 
   def test_it_exists
@@ -32,6 +35,9 @@ class BoardTest < MiniTest::Test
   end
 
   def test_coordinate_is_valid
+    skip
+    #replaced by \\  if (arr_of_coords - make_coordinates).empty?\\ line
+    #in valid_placement? method
     assert @board.valid_coordinate?("A1")
     assert @board.valid_coordinate?("D4")
     refute @board.valid_coordinate?("A5")
@@ -72,19 +78,17 @@ class BoardTest < MiniTest::Test
   end
 
   def test_board_can_place_a_ship_in_cells
-    skip
+
     @board.place(@cruiser, ["A1", "A2", "A3"])
     cell_1 = @board.cells["A1"]
     cell_2 = @board.cells["A2"]
     cell_3 = @board.cells["A3"]
 
-    assert_equal Cell.new("A1"), @board.cells["A1"]
-    assert_equal Cell.new("A2"), @board.cells["A2"]
-    assert_equal Cell.new("A3"), @board.cells["A3"]
+    assert_equal @cruiser, cell_1.ship
   end
 
   def test_multiple_cells_contain_the_same_ship
-    # skip
+
     @board.place(@cruiser, ["A1", "A2", "A3"])
     cell_1 = @board.cells["A1"]
     cell_2 = @board.cells["A2"]
@@ -93,5 +97,20 @@ class BoardTest < MiniTest::Test
     assert_equal @cruiser, cell_1.ship
     assert_equal @cruiser, cell_2.ship
     assert cell_3.ship == cell_2.ship
+  end
+
+  def test_ships_do_not_over_lap
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+
+    refute @board.valid_placement?(@submarine, ["A1", "B1"])
+    refute @board.valid_placement?(@tester_ship_1, ["A2", "B2"])
+    assert @board.valid_placement?(@tester_ship_2, ["B1", "C1"])
+    assert @board.valid_placement?(@submarine, ["D2", "D3"])
+  end
+
+  def test_board_renders_with_proper_symbols
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+
+    assert_equal "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n" , @board.render
   end
 end
