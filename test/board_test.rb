@@ -174,6 +174,7 @@ class BoardTest < MiniTest::Test
       "D X . . . "
     ].join("\n") + "\n"
 
+
     hide_ships_in_board = [
       " 1 2 3 4 ",
       "A H . . . ",
@@ -182,10 +183,8 @@ class BoardTest < MiniTest::Test
       "D X . . . "
     ].join("\n") + "\n"
 
-    binding.pry
     assert_equal hits_and_misses_in_board, @board.render(true)
     assert_equal hide_ships_in_board, @board.render
-
   end
 
 end

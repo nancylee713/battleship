@@ -1,5 +1,3 @@
-require './lib/cell'
-
 class Board
 
   attr_reader :cells
@@ -70,8 +68,8 @@ class Board
     end
   end
 
+
   def render(display_ship=false)
-    # Still working: optional argument whether to show hidden ships or not
 
     # 1. Create an array of dots (initial cell status) by calling .render on each cell object
     # 2. Create an array of subarrays that represent each row on the board (i.e., game_board)
@@ -89,20 +87,19 @@ class Board
     game_board = []
 
     @cells.each_pair do |k, v|
-      if display_ship == false && v.render == 'S'
-        rows << '.'
-      else
-        rows << v.render
-      end
+      rows << v.render
     end
+
+    # Otional argument: show or hide "S"
+    rows.map! { |e| e == 'S' ? e = '.' : e } if display_ship == false
 
     # Processing ============
-      (cell_nums + rows).each_slice(4).zip(cell_chars)
-      .flatten
-      .unshift("")
-      .each_slice(5) { |row| game_board << row.join(' ') }
+    (cell_nums + rows).each_slice(4).zip(cell_chars)
+    .flatten
+    .unshift("")
+    .each_slice(5) { |row| game_board << row.join(' ') }
 
-      game_board.tap(&:pop).map { |e| e + " " }.join("\n") + "\n"
-    end
+    game_board.tap(&:pop).map { |e| e + " " }.join("\n") + "\n"
+  end
 
 end
