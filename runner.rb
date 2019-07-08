@@ -131,7 +131,6 @@ class PlayBoardGame
          game = PlayBoardGame.new()
          game.setup
          game.start
-         game.take_turn
        else
         puts " "
          puts "Alright. Goodbye!"
