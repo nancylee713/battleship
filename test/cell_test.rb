@@ -2,8 +2,8 @@ require "MiniTest/autorun"
 require "MiniTest/pride"
 require './lib/ship'
 require './lib/cell'
+require 'pry'
 
-# require 'pry'
 class CellTest < MiniTest::Test
 
   def setup
@@ -75,10 +75,11 @@ class CellTest < MiniTest::Test
     @cell_1.fire_upon
     @cell_1.fire_upon
     assert_equal "X", @cell_1.render
-
-    def test_it_renders_H_when_fired_upon_and_ship_placed
-      @cell_1.place_ship(@cruiser)
-      assert_equal "S", @cell_1.render
-    end
   end
+
+  def test_it_renders_H_when_fired_upon_and_ship_placed
+    @cell_1.place_ship(@cruiser)
+    assert_equal "S", @cell_1.render
+  end
+
 end

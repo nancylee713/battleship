@@ -24,7 +24,7 @@ class Cell
 
     if @ship == nil
       "M"
-    elsif @ship.sunk?
+    elsif @ship.sunk? == true
       "X"
     else
       @ship.hit
