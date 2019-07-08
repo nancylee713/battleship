@@ -27,6 +27,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_board_contains_16_cells
+    binding.pry
     assert_equal 16, @board.cells.length
   end
 
