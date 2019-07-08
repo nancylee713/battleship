@@ -30,11 +30,8 @@ class PlayBoardGame
     # Welcome, p or q?
     @prompts.initial_greeting
 
-    # Save user input
-    user_participation = gets.chomp().downcase
-
     # User input valid? (=p)
-    @prompts.start_game_valid(user_participation)
+    @prompts.ask_user_input
 
     #computer places ships
     @computer.computer_place_ships(@cruiser)

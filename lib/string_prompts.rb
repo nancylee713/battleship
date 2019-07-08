@@ -10,7 +10,9 @@ class StringPrompts
     puts ">>  Welcome to BATTLESHIP \n>>  Enter p to play. Enter q to quit."
   end
 
-  def start_game_valid(user_input)
+  def ask_user_input
+    user_input = gets.chomp().downcase
+
     if user_input == 'p'
       puts "Setting up the board now ..."
 
@@ -19,7 +21,7 @@ class StringPrompts
 
     else
       puts "That's not either p or q. Please enter your input again!"
-      start_game_valid
+      ask_user_input
     end
   end
 
