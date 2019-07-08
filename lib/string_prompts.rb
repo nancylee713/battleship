@@ -29,17 +29,10 @@ class StringPrompts
     puts "Please specify the board size greater than 3 >> ex) 4 "
   end
 
-  def inquire_cruiser_placement
+  def inquire_user_ship_placement
     puts "=" * 33
     puts "I have laid out my ships on the grid. (It's only visible to me!)"
-    puts "You now need to lay out your two ships."
-    puts "The Cruiser is 3 units long and the Submarine is 2 units long."
-    puts "Enter the squares for the Cruiser (3 spaces) (ex. A1 A2 A3): "
-  end
-
-  def inquire_submarine_placement
-    puts "=" * 33
-    puts "Enter the squares for the Submarine (2 spaces) (ex. C4 D4): "
+    puts "Now it's your turn to lay out your ships."
   end
 
   def display_computer_board
