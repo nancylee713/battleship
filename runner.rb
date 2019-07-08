@@ -36,13 +36,14 @@ class PlayBoardGame
     @user_board = Board.new(board_size)
     @user = Player.new(@user_board)
 
-    #computer places ships
+    # Computer places ships
     @computer.computer_place_ships(@cruiser)
     @computer.computer_place_ships(@submarine)
 
-    @prompts.inquire_user_ship_placement(board_size)
-
-    @user.user_place_ships(@cruiser)
+    # User places ships
+    @prompts.inquire_user_ship_placement
+    @user.user_place_custom_ships(board_size)
+    # @user.user_place_ships(@cruiser)
 
 
     # Same for submarine
