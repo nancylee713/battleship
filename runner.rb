@@ -28,12 +28,13 @@ class PlayBoardGame
 
     # Computer ship placement for cruiser
     computer_valid_coord = @computer.select_random_coordinates(@cruiser)
-    @computer_board.place(@cruiser, computer_valid_coord.flatten)
+    @computer_board.place(@cruiser, computer_valid_coord)
 
     # Computer ship placement for submarine & render board
     computer_valid_coord = @computer.select_random_coordinates(@submarine)
-    @computer_board.place(@submarine, computer_valid_coord.flatten)
-    puts @computer_board.render(true)
+    @computer_board.place(@submarine, computer_valid_coord)
+    puts @computer_board.render
+
     # Stay in loop until cruiser has valid placement
     @prompts.inquire_cruiser_placement
 
@@ -82,6 +83,8 @@ class PlayBoardGame
       end
       puts "Please enter a valid coordinate: "
     end
+
+    # take turns
 
   end
 

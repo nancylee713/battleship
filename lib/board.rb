@@ -79,9 +79,9 @@ class Board
     rows.map! { |e| e == 'S' ? e = '.' : e } if display_ship == false
 
     (cell_nums + rows).each_slice(4).zip(cell_chars)
-    .flatten
-    .unshift("")
-    .each_slice(5) { |row| game_board << row.join(' ') }
+      .flatten
+      .unshift("")
+      .each_slice(5) { |row| game_board << row.join(' ') }
 
     game_board.tap(&:pop).map { |e| e + " " }.join("\n") + "\n"
   end
