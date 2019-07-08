@@ -1,6 +1,7 @@
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
+require './lib/computer'
 require './lib/string_prompts'
 require 'pry'
 
@@ -11,6 +12,7 @@ class PlayBoardGame
     @submarine = Ship.new("Submarine", 2)
     @prompts = StringPrompts.new
     @computer_board = Board.new
+    @computer = Computer.new(@computer_board)
     @user_board = Board.new
   end
 
@@ -24,8 +26,13 @@ class PlayBoardGame
     # User input valid? (=p)
     @prompts.start_game_valid(user_participation)
 
-    # Computer ship placement & render the board
-    @computer_board.place(@cruiser, ["D1", "D2", "D3"])
+    # Computer ship placement for cruiser
+    computer_valid_coord = @computer.select_random_coordinates(@cruiser)
+    @computer_board.place(@cruiser, computer_valid_coord)
+
+    # Computer ship placement for submarine & render board
+    computer_valid_coord = @computer.select_random_coordinates(@submarine)
+    @computer_board.place(@submarine, computer_valid_coord)
     puts @computer_board.render
 
     # Stay in loop until cruiser has valid placement
@@ -67,6 +74,7 @@ class PlayBoardGame
       # Player turn
       @prompts.player_turn_to_fire_on
 
+      # STILL WORKING: The user should not fire on a space that has already been fired on.
       loop do
         @user_shot_input = gets.chomp()
         valid_coordinate = @user_board.valid_coordinate? @user_shot_input
@@ -96,6 +104,10 @@ class PlayBoardGame
       @user_board.cells[@valid_computer_input[0]].fire_upon
 
       # Display results
+      # A shot missed
+      # A shot hit a ship
+      # A shot sunk a ship
+
       binding.pry
       puts "Your shot on #{@user_shot_input} was a miss."
       puts "My shot on #{@valid_computer_input[0]} was a miss."
