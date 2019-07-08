@@ -10,7 +10,7 @@ class BoardTest < MiniTest::Test
 
   def setup
     @board = Board.new
-    @cell = Cell.new("A1")q
+    @cell = Cell.new("A1")
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
     @tester_ship_1 = Ship.new("Tester_Ship_1",2)
@@ -184,11 +184,6 @@ class BoardTest < MiniTest::Test
 
     assert_equal hits_and_misses_in_board, @board.render(true)
     assert_equal hide_ships_in_board, @board.render
-  end
-
-
-  def test_computer_place_ship
-
   end
 
 end

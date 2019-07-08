@@ -86,9 +86,4 @@ class Board
     game_board.tap(&:pop).map { |e| e + " " }.join("\n") + "\n"
   end
 
-  def computer_place_ship
-
-    @cells.sample.keys
-  end
-
 end
