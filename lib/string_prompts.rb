@@ -1,3 +1,8 @@
+require './lib/ship'
+require './lib/cell'
+require './lib/board'
+require 'pry'
+
 class StringPrompts
 
   def initial_greeting
@@ -8,7 +13,7 @@ class StringPrompts
   def start_game_valid(user_input)
     if user_input == 'p'
       puts "Setting up the board now ..."
-    
+
     elsif user_input == 'q'
       exit
 
@@ -22,8 +27,9 @@ class StringPrompts
     puts "=" * 33
     puts "I have laid out my ships on the grid. (It's only visible to me!)"
     puts "You now need to lay out your two ships."
-    puts "The Cruiser is 2 units long and the Submarine is 3 units long."
+    puts "The Cruiser is 3 units long and the Submarine is 2 units long."
     puts "Enter the squares for the Cruiser (3 spaces) (ex. A1 A2 A3): "
+
     # check_user_placement => redo or render board
   end
 
