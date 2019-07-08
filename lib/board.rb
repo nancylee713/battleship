@@ -21,7 +21,6 @@ class Board
     coordinates = {}
     make_coordinates.each do |coord|
       coordinates.store(coord, Cell.new(coord))
-      # same as coordinates[coord] = Cell.new(coord))
     end
     coordinates
   end
@@ -58,7 +57,6 @@ class Board
 
 
   def place(ship, coords)
-    # check if given coordinates are valid & ship length matches
     if valid_placement?(ship, coords)
       @cells.each_pair do |k, v|
         if coords.include? k
