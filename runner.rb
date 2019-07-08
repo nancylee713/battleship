@@ -56,10 +56,28 @@ class PlayBoardGame
       puts "Those are invalid coordinates. Please try again: \n>"
     end
 
+    # Display 2 boards
+    puts "=============COMPUTER BOARD============="
+    puts @computer_board.render
+
+    puts "==============PLAYER BOARD=============="
+    puts @user_board.render(true)
+
+    # Player turn
+    @prompts.player_turn_to_fire_on
+
+    loop do
+      user_shot_input = gets.chomp()
+      valid_coordinate = @user_board.valid_coordinate? user_shot_input
+      if valid_coordinate
+        @user_board.cells[user_shot_input].fire_upon
+        puts @user_board.render(true)
+        break
+      end
+      puts "Please enter a valid coordinate: "
+    end
+
   end
-
-  # How to take turns b/w computer and user?
-
 
 end
 
