@@ -1,5 +1,3 @@
-require './lib/cell'
-
 class Board
 
   attr_reader :cells
@@ -23,15 +21,13 @@ class Board
     coordinates = {}
     make_coordinates.each do |coord|
       coordinates.store(coord, Cell.new(coord))
-      # same as coordinates[coord] = Cell.new(coord))
     end
     coordinates
   end
 
-  # not used within class, only used for test
-  # def valid_coordinate?(coord)
-  #   @cells.keys.include? coord
-  # end
+  def valid_coordinate?(coord)
+    @cells.keys.include? coord
+  end
 
   def valid_placement?(ship, arr_of_coords)
     if (arr_of_coords - make_coordinates).empty? && ship.length == arr_of_coords.length
@@ -60,7 +56,6 @@ class Board
 
 
   def place(ship, coords)
-    # check if given coordinates are valid & ship length matches
     if valid_placement?(ship, coords)
       @cells.each_pair do |k, v|
         if coords.include? k
@@ -70,13 +65,25 @@ class Board
     end
   end
 
-  def render
-    #puts five lines
-    #puts first lines with 1..4
-    #puts second line with A and cell_object.render? all cells with "A" coords
-    #puts third line with B and cell_object.render? all cells with "B" coords
-    #puts third line with C and cell_object.render? all cells with "C" coords
-    #puts third line with D and cell_object.render? all cells with "D" coords
+
+  def render(display_ship=false)
+    cell_chars = %w[A B C D]
+    cell_nums = %w[1 2 3 4]
+    rows = []
+    game_board = []
+
+    @cells.each_pair do |k, v|
+      rows << v.render
+    end
+
+    rows.map! { |e| e == 'S' ? e = '.' : e } if display_ship == false
+
+    (cell_nums + rows).each_slice(4).zip(cell_chars)
+    .flatten
+    .unshift("")
+    .each_slice(5) { |row| game_board << row.join(' ') }
+
+    game_board.tap(&:pop).map { |e| e + " " }.join("\n") + "\n"
   end
 
 end

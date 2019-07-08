@@ -1,9 +1,8 @@
-
-require 'MiniTest/autorun'
-require 'MiniTest/pride'
-require './lib/ship'
-require './lib/cell'
+require "MiniTest/autorun"
+require "MiniTest/pride"
 require './lib/board'
+require './lib/cell'
+require './lib/ship'
 
 require 'pry'
 
@@ -23,10 +22,12 @@ class BoardTest < MiniTest::Test
   end
 
   def test_board_is_a_hash
+
     assert_equal Hash, @board.cells.class
   end
 
   def test_board_contains_16_cells
+    binding.pry
     assert_equal 16, @board.cells.length
   end
 
@@ -35,9 +36,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_coordinate_is_valid
-    skip
-    #replaced by \\  if (arr_of_coords - make_coordinates).empty?\\ line
-    #in valid_placement? method
+    # skip
     assert @board.valid_coordinate?("A1")
     assert @board.valid_coordinate?("D4")
     refute @board.valid_coordinate?("A5")
@@ -108,9 +107,88 @@ class BoardTest < MiniTest::Test
     assert @board.valid_placement?(@submarine, ["D2", "D3"])
   end
 
-  def test_board_renders_with_proper_symbols
+  def test_initial_board_renders_with_dots
+    initial_board = [
+      " 1 2 3 4 ",
+      "A . . . . ",
+      "B . . . . ",
+      "C . . . . ",
+      "D . . . . "
+    ].join("\n") + "\n"
+
+    assert_equal initial_board, @board.render
+  end
+
+  def test_board_shows_when_ships_are_loaded
     @board.place(@cruiser, ["A1", "A2", "A3"])
 
-    assert_equal "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n" , @board.render
+    cruiser_in_board = [
+      " 1 2 3 4 ",
+      "A S S S . ",
+      "B . . . . ",
+      "C . . . . ",
+      "D . . . . "
+    ].join("\n") + "\n"
+
+    assert_equal cruiser_in_board, @board.render(true)
+
+    @board.place(@submarine, ["C1", "D1"])
+
+    submarine_in_board = [
+      " 1 2 3 4 ",
+      "A S S S . ",
+      "B . . . . ",
+      "C S . . . ",
+      "D S . . . "
+    ].join("\n") + "\n"
+
+
+    assert_equal submarine_in_board, @board.render(true)
+
+    dont_show_ships_in_board = [
+      " 1 2 3 4 ",
+      "A . . . . ",
+      "B . . . . ",
+      "C . . . . ",
+      "D . . . . "
+    ].join("\n") + "\n"
+
+    assert_equal dont_show_ships_in_board, @board.render
   end
+
+  def test_board_shows_Hs_and_Ms
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    @board.place(@submarine, ["C1", "D1"])
+
+    @board.cells["A1"].fire_upon
+    @board.cells["B4"].fire_upon
+    @board.cells["C1"].fire_upon
+    @board.cells["D1"].fire_upon
+
+    hits_and_misses_in_board = [
+      " 1 2 3 4 ",
+      "A H S S . ",
+      "B . . . M ",
+      "C X . . . ",
+      "D X . . . "
+    ].join("\n") + "\n"
+
+
+    hide_ships_in_board = [
+      " 1 2 3 4 ",
+      "A H . . . ",
+      "B . . . M ",
+      "C X . . . ",
+      "D X . . . "
+    ].join("\n") + "\n"
+
+    assert_equal hits_and_misses_in_board, @board.render(true)
+    assert_equal hide_ships_in_board, @board.render
+  end
+
+
+  def test_case_name
+
+  end
+
 end
