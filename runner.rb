@@ -124,14 +124,23 @@ class PlayBoardGame
 
       # When game is over: Break loop when either board has 5 X's
       if @user_board.render(true).count("X") == 5
+        puts " "
         @prompts.final_menu
+        puts " "
+        @prompts.display_computer_board
         puts @computer_board.render(true)
+        @prompts.display_user_board
         puts @user_board.render(true)
         puts "I won!"
         break
+
       elsif @computer_board.render(true).count("X") == 5
+        puts " "
         @prompts.final_menu
+        puts " "
+        @prompts.display_computer_board
         puts @computer_board.render(true)
+        @prompts.display_user_board
         puts @user_board.render(true)
         puts "You won!"
         break
