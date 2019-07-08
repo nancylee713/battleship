@@ -35,9 +35,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_coordinate_is_valid
-    skip
-    #replaced by \\  if (arr_of_coords - make_coordinates).empty?\\ line
-    #in valid_placement? method
+    # skip
     assert @board.valid_coordinate?("A1")
     assert @board.valid_coordinate?("D4")
     refute @board.valid_coordinate?("A5")
