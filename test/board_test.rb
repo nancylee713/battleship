@@ -187,4 +187,9 @@ class BoardTest < MiniTest::Test
     assert_equal hide_ships_in_board, @board.render
   end
 
+
+  def test_case_name
+
+  end
+
 end
