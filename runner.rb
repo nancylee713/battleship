@@ -1,7 +1,7 @@
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
-require './lib/computer'
+require './lib/player'
 require './lib/string_prompts'
 require 'pry'
 
@@ -21,9 +21,9 @@ class PlayBoardGame
     @submarine = Ship.new("Submarine", 2)
     @prompts = StringPrompts.new
     @computer_board = Board.new
-    @computer = Computer.new(@computer_board)
+    @computer = Player.new(@computer_board)
     @user_board = Board.new
-    @user = Computer.new(@user_board)
+    @user = Player.new(@user_board)
   end
 
   def start
@@ -41,31 +41,10 @@ class PlayBoardGame
 
     @user.user_place_ships(@cruiser)
 
-    # loop do
-    #   user_cruiser_input = gets.chomp().upcase.split
-    #   valid_input = @user_board.valid_placement?(@cruiser, user_cruiser_input)
-    #   if valid_input
-    #     @user_board.place(@cruiser, user_cruiser_input)
-    #     puts @user_board.render(true)
-    #     break
-    #   end
-    #   puts "Those are invalid coordinates. Please try again: \n>"
-    # end
 
     # Same for submarine
     @prompts.inquire_submarine_placement
     @user.user_place_ships(@submarine)
-
-    # loop do
-    #   user_submarine_input = gets.chomp().upcase.split
-    #   valid_input = @user_board.valid_placement?(@submarine, user_submarine_input)
-    #   if valid_input
-    #     @user_board.place(@submarine, user_submarine_input)
-    #     puts @user_board.render(true)
-    #     break
-    #   end
-    #   puts "Those are invalid coordinates. Please try again: \n>"
-    # end
 
 
     ############# START TURN LOOP ################
@@ -78,24 +57,27 @@ class PlayBoardGame
       puts @user_board.render(true)
 
       # Player turn
-      @prompts.player_turn_to_fire_on
 
 
-      loop do
-
+      ready_to_fire = false
+      until ready_to_fire
+        @prompts.player_turn_to_fire_on
         @user_shot_input = gets.chomp().upcase
 
         valid_coordinate = @user_board.valid_coordinate? @user_shot_input
 
-        #cell_not_fired_upon = @computer_board.cells[@user_shot_input].fired_upon?
-
-        ########### BUG!!! BREAKS IF INVALID COORD ENTERED... EX F5######################
-        if valid_coordinate == true #&& (cell_not_fired_upon == false)
-          @computer_board.cells[@user_shot_input].fire_upon
-          break
+        if !valid_coordinate
+          puts "Please enter a valid coordinate: "
+        elsif @computer_board.cells[@user_shot_input].fired_upon?
+          puts "Sorry, you've already fired upon that coordinate. Please try again: "
+        else
+          ready_to_fire = true
         end
-        puts "Please enter a valid coordinate: "
+
       end
+
+      @computer_board.cells[@user_shot_input].fire_upon
+
 
       # Computer turn
       @prompts.computer_turn_to_fire_on
