@@ -74,6 +74,7 @@ class PlayBoardGame
       # Player turn
       @prompts.player_turn_to_fire_on
 
+      # STILL WORKING: The user should not fire on a space that has already been fired on.
       loop do
         @user_shot_input = gets.chomp()
         valid_coordinate = @user_board.valid_coordinate? @user_shot_input
@@ -103,9 +104,18 @@ class PlayBoardGame
       @user_board.cells[@valid_computer_input[0]].fire_upon
 
       # Display results
+      # A shot missed
+      # A shot hit a ship
+      # A shot sunk a ship
+
       binding.pry
-      puts "Your shot on #{@user_shot_input} was a miss."
-      puts "My shot on #{@valid_computer_input[0]} was a miss."
+      user_shot_result = ""
+      computer_shot_result = ""
+      # if user_cruiser_input.include? @valid_computer_input[0]
+      # select { |x| @user_board.cells.values[0].ship != nil }
+
+      puts "Your shot on #{@user_shot_input} was a #{user_shot_result}."
+      puts "My shot on #{@valid_computer_input[0]} was a #{computer_shot_result}."
 
 
       # When game is over: Break loop when either board has 5 X's
