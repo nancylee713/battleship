@@ -29,18 +29,51 @@ class StringPrompts
     puts "Please specify the board size greater than 3 >> ex) 4 "
   end
 
-  def inquire_cruiser_placement
+  def inquire_user_ship_placement(board_size)
     puts "=" * 33
     puts "I have laid out my ships on the grid. (It's only visible to me!)"
-    puts "You now need to lay out your two ships."
-    puts "The Cruiser is 3 units long and the Submarine is 2 units long."
-    puts "Enter the squares for the Cruiser (3 spaces) (ex. A1 A2 A3): "
+    puts "Now it's your turn to lay out your ships."
+
+    user_ships = []
+
+    loop do
+      puts "What do you want to call your ship?"
+      user_ship_name = gets.chomp().capitalize
+
+      puts "How long is your ship?"
+      puts"** Note that it must fit the board size of your choice."
+      user_ship_length = gets.chomp().to_i
+
+        if user_ship_length > board_size
+          puts "Oops, your ship is too big for this board. Please try again!"
+          puts "How long is your ship?"
+          puts"** Note that it must fit the board size of your choice."
+          user_ship_length = gets.chomp().to_i
+        end
+
+      puts "Do you want to make another ship? (y/n)"
+      user_input = gets.chomp().downcase
+
+        if ['y', 'n'].none? user_input
+          puts "Ooops, this isn't either yes or no. Please try again!"
+          puts "Do you want to make another ship? (y/n)"
+          user_input = gets.chomp().downcase
+        end
+
+      user_ship = [user_ship_name, user_ship_length]
+      user_ships << user_ship
+
+      if user_input == 'n'
+        break
+      end
+
+      user_ships
+    end
+
+    puts "Here are a list of ships that you've just created: "
+    user_ships.each {|ship| p ship}
   end
 
-  def inquire_submarine_placement
-    puts "=" * 33
-    puts "Enter the squares for the Submarine (2 spaces) (ex. C4 D4): "
-  end
 
   def display_computer_board
     puts "=============COMPUTER BOARD============="

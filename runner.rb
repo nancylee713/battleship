@@ -29,8 +29,8 @@ class PlayBoardGame
     # User input valid? (=p)
     @prompts.ask_user_input
     board_size = gets.chomp().to_i
-    # Set up board according to user input
 
+    # Set up board according to user input
     @computer_board = Board.new(board_size)
     @computer = Player.new(@computer_board)
     @user_board = Board.new(board_size)
@@ -40,14 +40,14 @@ class PlayBoardGame
     @computer.computer_place_ships(@cruiser)
     @computer.computer_place_ships(@submarine)
 
-    @prompts.inquire_cruiser_placement
+    @prompts.inquire_user_ship_placement(board_size)
 
     @user.user_place_ships(@cruiser)
 
 
     # Same for submarine
-    @prompts.inquire_submarine_placement
-    @user.user_place_ships(@submarine)
+    # @prompts.inquire_submarine_placement
+    # @user.user_place_ships(@submarine)
 
 
     ############# START TURN LOOP ################
@@ -107,6 +107,7 @@ class PlayBoardGame
 
 
       # When game is over: Break loop when either board has 5 X's
+
       if @user_board.render(true).count("X") == 5
         puts " "
         @prompts.final_menu
