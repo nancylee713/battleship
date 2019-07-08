@@ -25,6 +25,10 @@ class Board
     coordinates
   end
 
+<<<<<<< HEAD
+  # not used within class, only used for test
+=======
+>>>>>>> 8e44bd7843284ab97adc26a89a1e977eed0bb9a4
   def valid_coordinate?(coord)
     @cells.keys.include? coord
   end
@@ -84,6 +88,11 @@ class Board
       .each_slice(5) { |row| game_board << row.join(' ') }
 
     game_board.tap(&:pop).map { |e| e + " " }.join("\n") + "\n"
+  end
+
+  def computer_place_ship
+
+    @cells.sample.keys
   end
 
 end
