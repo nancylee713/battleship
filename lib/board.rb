@@ -1,36 +1,42 @@
 class Board
 
   attr_reader :cells
+  attr_accessor :size
 
-  def initialize
-    @cells = all_cells
+  def initialize(size=4)
+    @size = size
+    @cells = make_coordinates(@size)
   end
 
-  def make_coordinates
-    cell_chars = %w[A B C D]
-    cell_nums = %w[1 2 3 4]
+  def make_coordinates(size)
+    size = @size
+    temp_char_arr = Array.new(@size) {|i| i + 65 }
+    @cell_chars = temp_char_arr.map(&:chr)
+    @cell_nums  = Array.new(@size) {|i| i + 1 }
 
-    arr_coordinates = cell_chars.map do |char|
-      cell_nums.map do |num|
-        char + num
+
+    arr_coordinates = @cell_chars.map do |char|
+      @cell_nums.map do |num|
+        char + num.to_s
       end
     end.flatten
-  end
 
-  def all_cells
     coordinates = {}
-    make_coordinates.each do |coord|
+    arr_coordinates.each do |coord|
       coordinates.store(coord, Cell.new(coord))
     end
+
     coordinates
   end
+
 
   def valid_coordinate?(coord)
     @cells.keys.include? coord
   end
 
   def valid_placement?(ship, arr_of_coords)
-    if (arr_of_coords - make_coordinates).empty? && ship.length == arr_of_coords.length
+    valid_pool = make_coordinates(@size).keys
+    if (arr_of_coords - valid_pool).empty? && ship.length == arr_of_coords.length
     if ship_not_already_placed?(arr_of_coords)
         arr_of_coords.each_cons(2).all? do |coord_1, coord_2|
           # horizontally || vertically
@@ -67,8 +73,9 @@ class Board
 
 
   def render(display_ship=false)
-    cell_chars = %w[A B C D]
-    cell_nums = %w[1 2 3 4]
+    # cell_chars = %w[A B C D]
+    # cell_nums = %w[1 2 3 4]
+
     rows = []
     game_board = []
 
@@ -78,10 +85,10 @@ class Board
 
     rows.map! { |e| e == 'S' ? e = '.' : e } if display_ship == false
 
-    (cell_nums + rows).each_slice(4).zip(cell_chars)
+    (@cell_nums + rows).each_slice(@size).zip(@cell_chars)
       .flatten
       .unshift("")
-      .each_slice(5) { |row| game_board << row.join(' ') }
+      .each_slice((@size + 1)) { |row| game_board << row.join(' ') }
 
     game_board.tap(&:pop).map { |e| e + " " }.join("\n") + "\n"
   end
