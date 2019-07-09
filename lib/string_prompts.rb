@@ -68,5 +68,9 @@ class StringPrompts
 
   def display_player_board
     puts "==============PLAYER BOARD=============="
-  end 
+  end
+
+  def final_menu
+    puts "==============FINAL RESULT=============="
+  end
 end

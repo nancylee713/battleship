@@ -21,7 +21,7 @@ class PlayBoardGame
     @prompts.initial_greeting
 
     # Save user input
-    user_participation = $stdin.gets.chomp()
+    user_participation = gets.chomp().downcase
 
     # User input valid? (=p)
     @prompts.start_game_valid(user_participation)
@@ -39,7 +39,7 @@ class PlayBoardGame
     @prompts.inquire_cruiser_placement
 
     loop do
-      user_cruiser_input = gets.chomp().split
+      user_cruiser_input = gets.chomp().upcase.split
       valid_input = @user_board.valid_placement?(@cruiser, user_cruiser_input)
       if valid_input
         @user_board.place(@cruiser, user_cruiser_input)
@@ -53,7 +53,7 @@ class PlayBoardGame
     @prompts.inquire_submarine_placement
 
     loop do
-      user_submarine_input = gets.chomp().split
+      user_submarine_input = gets.chomp().upcase.split
       valid_input = @user_board.valid_placement?(@submarine, user_submarine_input)
       if valid_input
         @user_board.place(@submarine, user_submarine_input)
@@ -76,7 +76,7 @@ class PlayBoardGame
 
       # STILL WORKING: The user should not fire on a space that has already been fired on.
       loop do
-        @user_shot_input = gets.chomp()
+        @user_shot_input = gets.chomp().upcase
         valid_coordinate = @user_board.valid_coordinate? @user_shot_input
         if valid_coordinate
           @computer_board.cells[@user_shot_input].fire_upon
@@ -103,25 +103,52 @@ class PlayBoardGame
 
       @user_board.cells[@valid_computer_input[0]].fire_upon
 
-      # Display results
-      # A shot missed
-      # A shot hit a ship
-      # A shot sunk a ship
+      user_shot_result = ""
+      computer_shot_result = ""
 
-      binding.pry
-      puts "Your shot on #{@user_shot_input} was a miss."
-      puts "My shot on #{@valid_computer_input[0]} was a miss."
+      # Did computer hit, miss or sunk ship on user board?
+      coords_user_ships = @user_board.cells.select {|k, v| v.ship != nil }.map {|k, v| v.coordinate }
+
+      if coords_user_ships.include? @valid_computer_input[0]
+        computer_shot_result += "hit"
+      else
+        computer_shot_result += "miss"
+      end
+
+      # Did user hit, miss or sunk ship on computer board?
+      coords_computer_ships = @computer_board.cells.select {|k, v| v.ship != nil }.map {|k, v| v.coordinate }
+
+      if coords_computer_ships.include? @user_shot_input
+        user_shot_result += "hit"
+      else
+        user_shot_result += "miss"
+      end
+
+      puts "Your shot on #{@user_shot_input} was a #{user_shot_result}."
+      puts "My shot on #{@valid_computer_input[0]} was a #{computer_shot_result}."
 
 
       # When game is over: Break loop when either board has 5 X's
-      if @user_board.render(true).count("X") == 5 || @computer_board.render(true).count("X") == 5
-        # show result
+      if @user_board.render(true).count("X") == 5
+        @prompts.final_menu
+        puts @computer_board.render(true)
+        puts @user_board.render(true)
+        puts "I won!"
+        break
+      elsif @computer_board.render(true).count("X") == 5
+        @prompts.final_menu
+        puts @computer_board.render(true)
+        puts @user_board.render(true)
+        puts "You won!"
         break
       end
 
     end
 
   end
+
+end
+
 game = PlayBoardGame.new()
 game.setup
 game.start
