@@ -10,7 +10,7 @@ class BoardTest < MiniTest::Test
 
   def setup
     @board = Board.new
-    @cell = Cell.new("A1")
+    @cell = Cell.new("A1")q
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
     @tester_ship_1 = Ship.new("Tester_Ship_1",2)

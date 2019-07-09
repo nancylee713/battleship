@@ -12,7 +12,7 @@ class PlayBoardGame
     @submarine = Ship.new("Submarine", 2)
     @prompts = StringPrompts.new
     @computer_board = Board.new
-    @computer = Computer.new(@computer_board )
+    @computer = Computer.new(@computer_board)
     @user_board = Board.new
   end
 
