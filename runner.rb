@@ -1,7 +1,6 @@
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
-require './lib/computer'
 require './lib/string_prompts'
 require 'pry'
 
@@ -12,7 +11,6 @@ class PlayBoardGame
     @submarine = Ship.new("Submarine", 2)
     @prompts = StringPrompts.new
     @computer_board = Board.new
-    @computer = Computer.new(@computer_board)
     @user_board = Board.new
   end
 
@@ -26,13 +24,8 @@ class PlayBoardGame
     # User input valid? (=p)
     @prompts.start_game_valid(user_participation)
 
-    # Computer ship placement for cruiser
-    computer_valid_coord = @computer.select_random_coordinates(@cruiser)
-    @computer_board.place(@cruiser, computer_valid_coord)
-
-    # Computer ship placement for submarine & render board
-    computer_valid_coord = @computer.select_random_coordinates(@submarine)
-    @computer_board.place(@submarine, computer_valid_coord)
+    # Computer ship placement & render the board
+    @computer_board.place(@cruiser, ["D1", "D2", "D3"])
     puts @computer_board.render
 
     # Stay in loop until cruiser has valid placement
@@ -117,9 +110,6 @@ class PlayBoardGame
     end
 
   end
-
-end
-
 game = PlayBoardGame.new()
 game.setup
 game.start
