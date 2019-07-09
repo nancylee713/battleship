@@ -3,32 +3,49 @@ class Computer
   def initialize(board)
     @board = board
     @POOL_OF_COORDS = @board.cells.keys
-    @test_array = []
-    @test_array_2 = []
-    @valid_coords = []
-    @valid_coords_2 = []
   end
 
 
   def select_random_coordinates(ship)
-    random_number = [0, 1].sample(1)[0]
+    test_array = []
+    test_array_2 = []
+    valid_coords = []
+    valid_coords_2 = []
+    result = []
 
-    if random_number == 1   # horizontally
-      @POOL_OF_COORDS.each_slice(4) { |set| @test_array <<  set }
-      @test_array.each do |arr|
-        arr.each_cons(ship.length) { |set| @valid_coords << set }
+    loop do
+      # horizontally
+      @POOL_OF_COORDS.each_slice(4) { |set| test_array <<  set }
+      test_array.each do |arr|
+        arr.each_cons(ship.length) { |set| valid_coords << set }
       end
-      @valid_coords.sample(1)
 
-    else # vertically
+      # vertically
       sorted_pool = @POOL_OF_COORDS.sort_by {|n| n[1]}
-      sorted_pool.each_slice(4) { |set| @test_array_2 << set }
-      @test_array_2.map!(&:sort)
-      @test_array_2.each do |arr|
-        arr.each_cons(ship.length) { |set| @valid_coords_2 << set }
+      sorted_pool.each_slice(4) { |set| test_array_2 << set }
+      test_array_2.map!(&:sort)
+      test_array_2.each do |arr|
+        arr.each_cons(ship.length) { |set| valid_coords_2 << set }
       end
-      @valid_coords_2.sample(1)
+
+      # select 1 sample from the combination of horizontals & verticals
+      coords = valid_coords.push(valid_coords_2).sample(1).flatten
+
+      # break loop condition
+      if @board.valid_placement?(ship, coords)
+        result << coords
+        break
+      end
+
     end
+
+    result.flatten
+
+  end
+
+
+  def fire_on_player_ship
+    @POOL_OF_COORDS.sample(1)
   end
 
 end
