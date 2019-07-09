@@ -143,11 +143,21 @@ class BoardTest < MiniTest::Test
       "D S . . . "
     ].join("\n") + "\n"
 
+
     assert_equal submarine_in_board, @board.render(true)
+
+    dont_show_ships_in_board = [
+      " 1 2 3 4 ",
+      "A . . . . ",
+      "B . . . . ",
+      "C . . . . ",
+      "D . . . . "
+    ].join("\n") + "\n"
+
+    assert_equal dont_show_ships_in_board, @board.render
   end
 
   def test_board_shows_Hs_and_Ms
-    skip
     @board.place(@cruiser, ["A1", "A2", "A3"])
     @board.place(@submarine, ["C1", "D1"])
 
@@ -159,12 +169,27 @@ class BoardTest < MiniTest::Test
     hits_and_misses_in_board = [
       " 1 2 3 4 ",
       "A H S S . ",
-      "B . . . . ",
+      "B . . . M ",
       "C X . . . ",
       "D X . . . "
     ].join("\n") + "\n"
 
-    assert_equal hits_and_misses_in_board, @board.render
+
+    hide_ships_in_board = [
+      " 1 2 3 4 ",
+      "A H . . . ",
+      "B . . . M ",
+      "C X . . . ",
+      "D X . . . "
+    ].join("\n") + "\n"
+
+    assert_equal hits_and_misses_in_board, @board.render(true)
+    assert_equal hide_ships_in_board, @board.render
+  end
+
+
+  def test_case_name
+
   end
 
 end
