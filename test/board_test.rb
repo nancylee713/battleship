@@ -188,7 +188,7 @@ class BoardTest < MiniTest::Test
   end
 
 
-  def test_case_name
+  def test_computer_place_ship
 
   end
 

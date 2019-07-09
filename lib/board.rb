@@ -26,9 +26,9 @@ class Board
   end
 
   # not used within class, only used for test
-  # def valid_coordinate?(coord)
-  #   @cells.keys.include? coord
-  # end
+  def valid_coordinate?(coord)
+    @cells.keys.include? coord
+  end
 
   def valid_placement?(ship, arr_of_coords)
     if (arr_of_coords - make_coordinates).empty? && ship.length == arr_of_coords.length
@@ -85,6 +85,11 @@ class Board
     .each_slice(5) { |row| game_board << row.join(' ') }
 
     game_board.tap(&:pop).map { |e| e + " " }.join("\n") + "\n"
+  end
+
+  def computer_place_ship
+
+    @cells.sample.keys
   end
 
 end

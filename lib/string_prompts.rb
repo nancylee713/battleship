@@ -38,4 +38,15 @@ class StringPrompts
     # check_user_placement
   end
 
+  def fire_upon_computer
+    puts "Enter the coordinate for your shot:"
+  end
+
+  def display_computer_board
+    puts "=============COMPUTER BOARD============="
+  end
+
+  def display_player_board
+    puts "==============PLAYER BOARD=============="
+  end 
 end
