@@ -27,6 +27,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_board_contains_16_cells
+    binding.pry
     assert_equal 16, @board.cells.length
   end
 
@@ -35,9 +36,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_coordinate_is_valid
-    skip
-    #replaced by \\  if (arr_of_coords - make_coordinates).empty?\\ line
-    #in valid_placement? method
+    # skip
     assert @board.valid_coordinate?("A1")
     assert @board.valid_coordinate?("D4")
     refute @board.valid_coordinate?("A5")

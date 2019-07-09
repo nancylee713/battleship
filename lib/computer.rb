@@ -1,36 +1,38 @@
-# set up ships
-# choose ships to randomly fire upon.
-require 'pry'
-
 class Computer
 
   def initialize(board)
     @board = board
-    #might have to also initialize with user board.
+    @POOL_OF_COORDS = @board.cells.keys
+    @test_array = []
+    @test_array_2 = []
+    @valid_coords = []
+    @valid_coords_2 = []
   end
 
-  def computer_random_cord
-    @board.cells.keys.sample
-  end
 
-  def computer_place_ship(ship)
-    random_coord = computer_random_cord #A1
-    number_of_coords = ship.length
-    ship_coords = []
+  def select_random_coordinates(ship)
 
-    horizontal_or_vertical
-      if horizontal_or_vertical == 0 # A1
-        #takes in ship length --> returns X number of ship_coords
-        # if ship length 2 ... 1 2, 2 3, 3 4 ... method to create pairs?
-        # look at each_slice to compare coord value.
-        # loop to check valid.
+    until coords.valid_placement == true
+
+    random_number = [0, 1].sample(1)[0]
+
+      if random_number == 1   # horizontally
+        @POOL_OF_COORDS.each_slice(4) { |set| @test_array <<  set }
+        @test_array.each do |arr|
+          arr.each_cons(ship.length) { |set| @valid_coords << set }
+        end
+        coords = @valid_coords.sample(1)
+
+      else # vertically
+        sorted_pool = @POOL_OF_COORDS.sort_by {|n| n[1]}
+        sorted_pool.each_slice(4) { |set| @test_array_2 << set }
+        @test_array_2.map!(&:sort)
+        @test_array_2.each do |arr|
+          arr.each_cons(ship.length) { |set| @valid_coords_2 << set }
+        end
+        @valid_coords_2.sample(1)
+        coords = valid @valid_coords.sample(1)
+      end
     end
-
-    ship_coords
   end
-
-  def horizontal_or_vertical
-    random_num = rand(0..1)
-  end
-  #will I need user_board? --> might have to pass user board.
 end

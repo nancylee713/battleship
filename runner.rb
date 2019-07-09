@@ -1,6 +1,7 @@
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
+require './lib/computer'
 require './lib/string_prompts'
 require 'pry'
 
@@ -25,10 +26,15 @@ class PlayBoardGame
     # User input valid? (=p)
     @prompts.start_game_valid(user_participation)
 
-    # Computer ship placement & render the board
-    @computer_board.place(@cruiser, ["D1", "D2", "D3"])
-    puts @computer_board.render
+    # Computer ship placement for cruiser
+    computer_valid_coord = @computer.select_random_coordinates(@cruiser)
+    @computer_board.place(@cruiser, computer_valid_coord.flatten)
 
+    # Computer ship placement for submarine & render board
+    computer_valid_coord = @computer.select_random_coordinates(@submarine)
+
+    @computer_board.place(@submarine, computer_valid_coord.flatten)
+    puts @computer_board.render(true)
     # Stay in loop until cruiser has valid placement
     @prompts.inquire_cruiser_placement
 
@@ -59,39 +65,38 @@ class PlayBoardGame
     take_turn
     #loop within start, resposible for just one turn
 
+    # Display 2 boards
+    puts "=============COMPUTER BOARD============="
+    puts @computer_board.render
+
+    puts "==============PLAYER BOARD=============="
+    puts @user_board.render(true)
+
+    # Player turn
+
+    @prompts.player_turn_to_fire_on
+
+    loop do
+      user_shot_input = gets.chomp()
+      valid_coordinate = @user_board.valid_coordinate? user_shot_input
+      if valid_coordinate
+        @user_board.cells[user_shot_input].fire_upon
+        puts @user_board.render(true)
+        break
+      end
+      puts "Please enter a valid coordinate: "
+    end
+
   end
 
-  def take_turn
-    #how does compt know when all ship sunk?
-    #all ship cells are maked as 'X
-
-    #1. Diplay Board
-    #2. Player choose coords to fire_upon
-    #3. Computer choose choords fire_upon
-    #4. Report result of player shot
-    #5. report result of compt.
-    until if user_board.cells.cruiser.sunk? && user_board.cells.submarine.sunk? || computer_board.cells.cruiser.sunk? && computer_board.cells.submarine.sunk?
-    do loop
-      #until loop number of X equal 5... loop until false
-      @prompts.display_player_board
-      user.board.render
-      @prompts.display_computer_board
-      computer.board.render
-
-      @prompts.fire_upon_computer
-      user_input_fire_upon = gets.chomp().split
-      user_input_fire_upon.valid_coordinate?
-
-
-
-    # if all user_board.cells == board.cells.render("X")
-    #   "game over :("
-    #     count of ships = X
-      break
-  end
+  #   # if all user_board.cells == board.cells.render("X")
+  #   #   "game over :("
+  #   #     count of ships = X
+  #     break
+  # end
 end
   # How to take turns b/w computer and user?
-end
+
 
 game = PlayBoardGame.new()
 game.setup

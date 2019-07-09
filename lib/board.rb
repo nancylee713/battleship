@@ -25,7 +25,6 @@ class Board
     coordinates
   end
 
-  # not used within class, only used for test
   def valid_coordinate?(coord)
     @cells.keys.include? coord
   end
