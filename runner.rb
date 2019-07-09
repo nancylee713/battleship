@@ -1,9 +1,16 @@
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
-require './lib/computer'
 require './lib/string_prompts'
 require 'pry'
+
+# TO do
+  # - case senstive downcase
+  # - runner file refactor
+  # - more friendly prompts --> personality
+  # - user cannot fire_upon the cells that already fire_upon
+  # - display results
+
 
 class PlayBoardGame
 
@@ -12,7 +19,6 @@ class PlayBoardGame
     @submarine = Ship.new("Submarine", 2)
     @prompts = StringPrompts.new
     @computer_board = Board.new
-    @computer = Computer.new(@computer_board)
     @user_board = Board.new
   end
 
@@ -26,20 +32,15 @@ class PlayBoardGame
     # User input valid? (=p)
     @prompts.start_game_valid(user_participation)
 
-    # Computer ship placement for cruiser
-    computer_valid_coord = @computer.select_random_coordinates(@cruiser)
-    @computer_board.place(@cruiser, computer_valid_coord)
-
-    # Computer ship placement for submarine & render board
-    computer_valid_coord = @computer.select_random_coordinates(@submarine)
-    @computer_board.place(@submarine, computer_valid_coord)
+    # Computer ship placement & render the board
+    @computer_board.place(@cruiser, ["D1", "D2", "D3"])
     puts @computer_board.render
 
     # Stay in loop until cruiser has valid placement
     @prompts.inquire_cruiser_placement
 
     loop do
-      user_cruiser_input = gets.chomp().split
+      user_cruiser_input = gets.chomp().upcase.split
       valid_input = @user_board.valid_placement?(@cruiser, user_cruiser_input)
       if valid_input
         @user_board.place(@cruiser, user_cruiser_input)
@@ -53,7 +54,7 @@ class PlayBoardGame
     @prompts.inquire_submarine_placement
 
     loop do
-      user_submarine_input = gets.chomp().split
+      user_submarine_input = gets.chomp().upcase.split
       valid_input = @user_board.valid_placement?(@submarine, user_submarine_input)
       if valid_input
         @user_board.place(@submarine, user_submarine_input)
@@ -74,9 +75,8 @@ class PlayBoardGame
       # Player turn
       @prompts.player_turn_to_fire_on
 
-      # STILL WORKING: The user should not fire on a space that has already been fired on.
       loop do
-        @user_shot_input = gets.chomp()
+        @user_shot_input = gets.chomp().upcase
         valid_coordinate = @user_board.valid_coordinate? @user_shot_input
         if valid_coordinate
           @computer_board.cells[@user_shot_input].fire_upon
@@ -104,11 +104,6 @@ class PlayBoardGame
       @user_board.cells[@valid_computer_input[0]].fire_upon
 
       # Display results
-      # A shot missed
-      # A shot hit a ship
-      # A shot sunk a ship
-
-      binding.pry
       puts "Your shot on #{@user_shot_input} was a miss."
       puts "My shot on #{@valid_computer_input[0]} was a miss."
 
@@ -118,10 +113,9 @@ class PlayBoardGame
         # show result
         break
       end
-
     end
-
   end
+end
 game = PlayBoardGame.new()
 game.setup
 game.start
