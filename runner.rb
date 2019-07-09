@@ -1,6 +1,7 @@
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
+require './lib/computer'
 require './lib/string_prompts'
 require 'pry'
 
@@ -11,6 +12,7 @@ class PlayBoardGame
     @submarine = Ship.new("Submarine", 2)
     @prompts = StringPrompts.new
     @computer_board = Board.new
+    @computer = Computer.new(@computer_board)
     @user_board = Board.new
   end
 
@@ -24,10 +26,14 @@ class PlayBoardGame
     # User input valid? (=p)
     @prompts.start_game_valid(user_participation)
 
-    # Computer ship placement & render the board
-    @computer_board.place(@cruiser, ["D1", "D2", "D3"])
-    puts @computer_board.render
+    # Computer ship placement for cruiser
+    computer_valid_coord = @computer.select_random_coordinates(@cruiser)
+    @computer_board.place(@cruiser, computer_valid_coord.flatten)
 
+    # Computer ship placement for submarine & render board
+    computer_valid_coord = @computer.select_random_coordinates(@submarine)
+    @computer_board.place(@submarine, computer_valid_coord.flatten)
+    puts @computer_board.render(true)
     # Stay in loop until cruiser has valid placement
     @prompts.inquire_cruiser_placement
 
@@ -56,10 +62,28 @@ class PlayBoardGame
       puts "Those are invalid coordinates. Please try again: \n>"
     end
 
+    # Display 2 boards
+    puts "=============COMPUTER BOARD============="
+    puts @computer_board.render
+
+    puts "==============PLAYER BOARD=============="
+    puts @user_board.render(true)
+
+    # Player turn
+    @prompts.player_turn_to_fire_on
+
+    loop do
+      user_shot_input = gets.chomp()
+      valid_coordinate = @user_board.valid_coordinate? user_shot_input
+      if valid_coordinate
+        @user_board.cells[user_shot_input].fire_upon
+        puts @user_board.render(true)
+        break
+      end
+      puts "Please enter a valid coordinate: "
+    end
+
   end
-
-  # How to take turns b/w computer and user?
-
 
 end
 

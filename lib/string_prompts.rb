@@ -29,13 +29,26 @@ class StringPrompts
     puts "You now need to lay out your two ships."
     puts "The Cruiser is 3 units long and the Submarine is 2 units long."
     puts "Enter the squares for the Cruiser (3 spaces) (ex. A1 A2 A3): "
-
-    # check_user_placement => redo or render board
   end
 
   def inquire_submarine_placement
+    puts "=" * 33
     puts "Enter the squares for the Submarine (2 spaces) (ex. C4 D4): "
-    # check_user_placement
+  end
+
+  def player_turn_to_fire_on
+    puts "=" * 33
+    puts "Enter the coordinate for your shot: \n"
+  end
+
+  def computer_turn_to_fire_on
+    # The computer should choose a random space on the board.
+    # The computer should not fire on a space that has already been fired on.
+
+    puts "=" * 33
+    puts "My turn >>"
+
+
   end
 
 end

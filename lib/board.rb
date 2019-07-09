@@ -25,10 +25,9 @@ class Board
     coordinates
   end
 
-  # not used within class, only used for test
-  # def valid_coordinate?(coord)
-  #   @cells.keys.include? coord
-  # end
+  def valid_coordinate?(coord)
+    @cells.keys.include? coord
+  end
 
   def valid_placement?(ship, arr_of_coords)
     if (arr_of_coords - make_coordinates).empty? && ship.length == arr_of_coords.length
