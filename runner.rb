@@ -55,40 +55,61 @@ class PlayBoardGame
       end
       puts "Those are invalid coordinates. Please try again: \n>"
     end
-    take_turn
-    #loop within start, resposible for just one turn
+
+    loop do
+      # Display 2 boards
+      @prompts.display_computer_board
+      puts @computer_board.render
+
+      @prompts.display_user_board
+      puts @user_board.render(true)
+
+      # Player turn
+      @prompts.player_turn_to_fire_on
+
+      loop do
+        @user_shot_input = gets.chomp()
+        valid_coordinate = @user_board.valid_coordinate? @user_shot_input
+        if valid_coordinate
+          @computer_board.cells[@user_shot_input].fire_upon
+          break
+        end
+        puts "Please enter a valid coordinate: "
+      end
+
+      # Computer turn
+      @prompts.computer_turn_to_fire_on
+
+      loop do
+        @valid_computer_input = []
+
+        # Select a valid coordinate randomly
+        computer_shot_input = @computer_board.cells.keys.sample(1)
+
+        # The computer should not fire on a space that has already been fired on.
+        unless @user_board.cells[computer_shot_input[0]].fired_upon?
+          @valid_computer_input << computer_shot_input[0]
+          break
+        end
+      end
+
+      @user_board.cells[@valid_computer_input[0]].fire_upon
+
+      # Display results
+      binding.pry
+      puts "Your shot on #{@user_shot_input} was a miss."
+      puts "My shot on #{@valid_computer_input[0]} was a miss."
+
+
+      # When game is over: Break loop when either board has 5 X's
+      if @user_board.render(true).count("X") == 5 || @computer_board.render(true).count("X") == 5
+        # show result
+        break
+      end
+
+    end
 
   end
-
-  def take_turn
-    #how does compt know when all ship sunk?
-    #all ship cells are maked as 'X
-
-    #1. Diplay Board
-    #2. Player choose coords to fire_upon
-    #3. Computer choose choords fire_upon
-    #4. Report result of player shot
-    #5. report result of compt.
-    do loop
-      #until loop number of X equal 5... loop until false
-      @prompts.display_player_board
-      user.board.render
-      @prompts.display_player_board
-      computer.board.render
-
-      @prompts.fire_upon_computer
-      user_input_fire_upon = gets.chomp().split
-      user_input_fire_upon.valid_coordinate?
-
-    if all user_board.cells == board.cells.render("X")
-      "game over :("
-        count of ships = X
-      break
-  end
-end
-  # How to take turns b/w computer and user?
-end
-
 game = PlayBoardGame.new()
 game.setup
 game.start

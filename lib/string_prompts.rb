@@ -36,6 +36,15 @@ class StringPrompts
     puts "Enter the squares for the Submarine (2 spaces) (ex. C4 D4): "
   end
 
+  def display_computer_board
+    puts "=============COMPUTER BOARD============="
+  end
+
+  def display_user_board
+    puts "==============PLAYER BOARD=============="
+  end
+
+
   def player_turn_to_fire_on
     puts "=" * 33
     puts "Enter the coordinate for your shot: \n"
@@ -47,8 +56,6 @@ class StringPrompts
 
     puts "=" * 33
     puts "My turn >>"
-
-
   end
 
   def fire_upon_computer
