@@ -5,6 +5,15 @@ require './lib/computer'
 require './lib/string_prompts'
 require 'pry'
 
+# TO DO
+# ? player cannot fire upon cell that is already fired fire_upon ? --> created, but breaking valid_coord method
+# - friendlier prompts
+# - refactor runner -> created methods in computer class to place computer ship and submarine
+# _ end of game returns back to the main file
+# - start looking at expanding boards
+# - bug with user input in starting game
+# - make user place ship step in runner into method in computer class
+
 class PlayBoardGame
 
   def setup
@@ -14,6 +23,7 @@ class PlayBoardGame
     @computer_board = Board.new
     @computer = Computer.new(@computer_board)
     @user_board = Board.new
+    @user = Computer.new(@user_board)
   end
 
   def start
@@ -26,43 +36,42 @@ class PlayBoardGame
     # User input valid? (=p)
     @prompts.start_game_valid(user_participation)
 
-    # Computer ship placement for cruiser
-    computer_valid_coord = @computer.select_random_coordinates(@cruiser)
-    @computer_board.place(@cruiser, computer_valid_coord)
+    #computer places ships
+    @computer.computer_place_ships(@cruiser)
+    @computer.computer_place_ships(@submarine)
 
-    # Computer ship placement for submarine & render board
-    computer_valid_coord = @computer.select_random_coordinates(@submarine)
-    @computer_board.place(@submarine, computer_valid_coord)
-    puts @computer_board.render
-
-    # Stay in loop until cruiser has valid placement
     @prompts.inquire_cruiser_placement
 
-    loop do
-      user_cruiser_input = gets.chomp().upcase.split
-      valid_input = @user_board.valid_placement?(@cruiser, user_cruiser_input)
-      if valid_input
-        @user_board.place(@cruiser, user_cruiser_input)
-        puts @user_board.render(true)
-        break
-      end
-      puts "Those are invalid coordinates. Please try again: \n>"
-    end
+    @user.user_place_ships(@cruiser)
+
+    # loop do
+    #   user_cruiser_input = gets.chomp().upcase.split
+    #   valid_input = @user_board.valid_placement?(@cruiser, user_cruiser_input)
+    #   if valid_input
+    #     @user_board.place(@cruiser, user_cruiser_input)
+    #     puts @user_board.render(true)
+    #     break
+    #   end
+    #   puts "Those are invalid coordinates. Please try again: \n>"
+    # end
 
     # Same for submarine
     @prompts.inquire_submarine_placement
+    @user.user_place_ships(@submarine)
 
-    loop do
-      user_submarine_input = gets.chomp().upcase.split
-      valid_input = @user_board.valid_placement?(@submarine, user_submarine_input)
-      if valid_input
-        @user_board.place(@submarine, user_submarine_input)
-        puts @user_board.render(true)
-        break
-      end
-      puts "Those are invalid coordinates. Please try again: \n>"
-    end
+    # loop do
+    #   user_submarine_input = gets.chomp().upcase.split
+    #   valid_input = @user_board.valid_placement?(@submarine, user_submarine_input)
+    #   if valid_input
+    #     @user_board.place(@submarine, user_submarine_input)
+    #     puts @user_board.render(true)
+    #     break
+    #   end
+    #   puts "Those are invalid coordinates. Please try again: \n>"
+    # end
 
+
+    ############# START TURN LOOP ################
     loop do
       # Display 2 boards
       @prompts.display_computer_board
@@ -74,11 +83,17 @@ class PlayBoardGame
       # Player turn
       @prompts.player_turn_to_fire_on
 
-      # STILL WORKING: The user should not fire on a space that has already been fired on.
+
       loop do
+
         @user_shot_input = gets.chomp().upcase
+
         valid_coordinate = @user_board.valid_coordinate? @user_shot_input
-        if valid_coordinate
+
+        #cell_not_fired_upon = @computer_board.cells[@user_shot_input].fired_upon?
+
+        ########### BUG!!! BREAKS IF INVALID COORD ENTERED... EX F5######################
+        if valid_coordinate == true #&& (cell_not_fired_upon == false)
           @computer_board.cells[@user_shot_input].fire_upon
           break
         end
