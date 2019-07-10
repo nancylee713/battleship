@@ -53,4 +53,17 @@ class Computer
     @board.place(ship, computer_valid_coord)
   end
 
+  def user_place_ships(ship)
+    loop do
+      user_cruiser_input = gets.chomp().upcase.split
+      valid_input = @board.valid_placement?(ship, user_cruiser_input)
+      if valid_input
+        @board.place(ship, user_cruiser_input)
+        puts @board.render(true)
+        break
+      end
+      puts "Those are invalid coordinates. Please try again: \n>"
+    end
+  end
+
 end
