@@ -80,9 +80,15 @@ class PlayBoardGame
 
       # STILL WORKING: The user should not fire on a space that has already been fired on.
       loop do
+
         @user_shot_input = gets.chomp().upcase
+
         valid_coordinate = @user_board.valid_coordinate? @user_shot_input
-        if valid_coordinate
+
+        cell_not_fired_upon = @computer_board.cells[@user_shot_input].fired_upon?
+
+        ##BREAKS IF INVALID COORD ENTERED... EX F5
+        if valid_coordinate == true && cell_not_fired_upon == false
           @computer_board.cells[@user_shot_input].fire_upon
           break
         end
