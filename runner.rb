@@ -121,8 +121,24 @@ class PlayBoardGame
         break
       end
     end
-  end
-end
+    # Prompt user to play again
+    puts " "
+    puts "Would you like to play again? y or n"
+    play_again = gets.chomp.downcase
+
+     if play_again == "y"
+        puts " "
+         game = PlayBoardGame.new()
+         game.setup
+         game.start
+         game.take_turn
+       else
+        puts " "
+         puts "Alright. Goodbye!"
+         exit
+       end
+     end
+   end
 
 game = PlayBoardGame.new()
 game.setup
