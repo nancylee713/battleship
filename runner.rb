@@ -58,7 +58,7 @@ class PlayBoardGame
       @prompts.display_user_board
       puts @user_board.render(true)
 
-      # Player
+      # Player fires upon computer
       @prompts.player_turn_to_fire_on
       @user.fire_upon_computer(@computer_board)
 
