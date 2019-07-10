@@ -57,29 +57,10 @@ class PlayBoardGame
       puts @user_board.render(true)
 
       # Player turn
+      @prompts.player_turn_to_fire_on
 
+      @user.fire_upon_computer(@computer_board)
 
-      ready_to_fire = false
-      until ready_to_fire
-        @prompts.player_turn_to_fire_on
-        @user_shot_input = gets.chomp().upcase
-
-        valid_coordinate = @user_board.valid_coordinate? @user_shot_input
-
-        if !valid_coordinate
-          puts "Please enter a valid coordinate: "
-        elsif @computer_board.cells[@user_shot_input].fired_upon?
-          puts "Sorry, you've already fired upon that coordinate. Please try again: "
-        else
-          ready_to_fire = true
-        end
-
-      end
-
-      @computer_board.cells[@user_shot_input].fire_upon
-
-
-      # Computer turn
       @prompts.computer_turn_to_fire_on
 
       loop do
