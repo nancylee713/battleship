@@ -50,7 +50,6 @@ class StringPrompts
     puts "==============PLAYER BOARD=============="
   end
 
-
   def player_turn_to_fire_on
     puts "=" * 33
     puts "Enter the coordinate for your shot: \n"

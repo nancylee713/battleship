@@ -22,6 +22,7 @@ class PlayBoardGame
     @prompts = StringPrompts.new
   end
 
+
   def start
     # Welcome, p or q?
     @prompts.initial_greeting
@@ -66,6 +67,7 @@ class PlayBoardGame
 
       @prompts.computer_turn_to_fire_on
 
+
       loop do
         @valid_computer_input = []
 
@@ -78,6 +80,7 @@ class PlayBoardGame
           break
         end
       end
+
 
       @user_board.cells[@valid_computer_input[0]].fire_upon
 
@@ -129,11 +132,8 @@ class PlayBoardGame
         puts "You won!"
         break
       end
-
     end
-
   end
-
 end
 
 game = PlayBoardGame.new()
