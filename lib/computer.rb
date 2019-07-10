@@ -1,3 +1,4 @@
+require 'pry'
 class Computer
 
   def initialize(board)
@@ -34,5 +35,22 @@ class Computer
         coords = valid @valid_coords.sample(1)
       end
     end
+<<<<<<< Updated upstream
   end
+=======
+
+    result.flatten
+
+  end
+
+  def fire_on_player_ship
+    @POOL_OF_COORDS.sample(1)
+  end
+
+  def computer_place_ships(ship)
+    computer_valid_coord = select_random_coordinates(ship)
+    @board.place(ship, computer_valid_coord)
+  end
+
+>>>>>>> Stashed changes
 end
