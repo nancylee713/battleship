@@ -5,15 +5,6 @@ require './lib/player'
 require './lib/string_prompts'
 require 'pry'
 
-# TO DO
-# ? player cannot fire upon cell that is already fired fire_upon ? --> created, but breaking valid_coord method
-# - friendlier prompts
-# - refactor runner -> created methods in computer class to place computer ship and submarine
-# _ end of game returns back to the main file
-# - start looking at expanding boards
-# - bug with user input in starting game
-# - make user place ship step in runner into method in computer class
-
 class PlayBoardGame
 
   def setup
