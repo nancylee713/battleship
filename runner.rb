@@ -5,6 +5,16 @@ require './lib/computer'
 require './lib/string_prompts'
 require 'pry'
 
+# TO DO
+# _ player cannot fire upon cell that is already fired fire_upon ??? testing
+# - friendlier prompts
+# - refactor runner
+# _ end of game returns back to the main file
+# - start looking at expanding board
+# - bug with checking if cell fired upon
+# - bug with user input in starting game
+# - make user place ship step in runner into method in computer class
+
 class PlayBoardGame
 
   def setup
@@ -26,16 +36,10 @@ class PlayBoardGame
     # User input valid? (=p)
     @prompts.start_game_valid(user_participation)
 
-    # Computer ship placement for cruiser
-    computer_valid_coord = @computer.select_random_coordinates(@cruiser)
-    @computer_board.place(@cruiser, computer_valid_coord)
+    #computer places ships
+    @computer.computer_place_ships(@cruiser)
+    @computer.computer_place_ships(@submarine)
 
-    # Computer ship placement for submarine & render board
-    computer_valid_coord = @computer.select_random_coordinates(@submarine)
-    @computer_board.place(@submarine, computer_valid_coord)
-    puts @computer_board.render
-
-    # Stay in loop until cruiser has valid placement
     @prompts.inquire_cruiser_placement
 
     loop do
