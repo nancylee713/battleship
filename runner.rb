@@ -24,64 +24,61 @@ class PlayBoardGame
 
 
   def start
-    # Welcome, p or q?
+
     @prompts.initial_greeting
 
-    # User input valid? (=p)
+    # User prompted to play game
     @prompts.ask_user_input
     board_size = gets.chomp().to_i
-    # Set up board according to user input
 
+    # Set up board according to user input
     @computer_board = Board.new(board_size)
     @computer = Player.new(@computer_board)
     @user_board = Board.new(board_size)
     @user = Player.new(@user_board)
 
-    #computer places ships
+    #Computer places ships
     @computer.computer_place_ships(@cruiser)
     @computer.computer_place_ships(@submarine)
 
+    #User prompted to place ships
     @prompts.inquire_cruiser_placement
-
     @user.user_place_ships(@cruiser)
 
-
-    # Same for submarine
     @prompts.inquire_submarine_placement
     @user.user_place_ships(@submarine)
 
 
-    ############# START TURN LOOP ################
+   #Turn loop started
     loop do
-      # Display 2 boards
+
       @prompts.display_computer_board
       puts @computer_board.render
 
       @prompts.display_user_board
       puts @user_board.render(true)
 
-      # Player turn
+      # Player
       @prompts.player_turn_to_fire_on
-
       @user.fire_upon_computer(@computer_board)
 
       @prompts.computer_turn_to_fire_on
 
-
+      #Computer fires upon player
       loop do
         @valid_computer_input = []
 
         # Select a valid coordinate randomly
         computer_shot_input = @computer_board.cells.keys.sample(1)
 
-        # The computer should not fire on a space that has already been fired on.
+        # Computer cannot fire upon cell already fired upon
         unless @user_board.cells[computer_shot_input[0]].fired_upon?
           @valid_computer_input << computer_shot_input[0]
           break
         end
       end
 
-
+      #Results of turn displayed
       @user_board.cells[@valid_computer_input[0]].fire_upon
 
       user_shot_result = ""

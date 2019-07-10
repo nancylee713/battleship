@@ -56,9 +56,6 @@ class StringPrompts
   end
 
   def computer_turn_to_fire_on
-    # The computer should choose a random space on the board.
-    # The computer should not fire on a space that has already been fired on.
-
     puts "=" * 33
     puts "My turn >>"
   end
