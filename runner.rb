@@ -90,10 +90,10 @@ class PlayBoardGame
 
         valid_coordinate = @user_board.valid_coordinate? @user_shot_input
 
-        cell_not_fired_upon = @computer_board.cells[@user_shot_input].fired_upon?
+        #cell_not_fired_upon = @computer_board.cells[@user_shot_input].fired_upon?
 
         ########### BUG!!! BREAKS IF INVALID COORD ENTERED... EX F5######################
-        if valid_coordinate == true && cell_not_fired_upon == false
+        if valid_coordinate == true #&& (cell_not_fired_upon == false)
           @computer_board.cells[@user_shot_input].fire_upon
           break
         end

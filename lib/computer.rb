@@ -36,11 +36,8 @@ class Computer
         result << coords
         break
       end
-
     end
-
     result.flatten
-
   end
 
 
@@ -48,10 +45,14 @@ class Computer
     @POOL_OF_COORDS.sample(1)
   end
 
+
+
   def computer_place_ships(ship)
     computer_valid_coord = select_random_coordinates(ship)
     @board.place(ship, computer_valid_coord)
   end
+
+
 
   def user_place_ships(ship)
     loop do
