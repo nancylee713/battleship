@@ -5,15 +5,6 @@ require './lib/player'
 require './lib/string_prompts'
 require 'pry'
 
-# TO DO
-# ? player cannot fire upon cell that is already fired fire_upon ? --> created, but breaking valid_coord method
-# - friendlier prompts
-# - refactor runner -> created methods in computer class to place computer ship and submarine
-# _ end of game returns back to the main file
-# - start looking at expanding boards
-# - bug with user input in starting game
-# - make user place ship step in runner into method in computer class
-
 class PlayBoardGame
 
   def setup
@@ -22,11 +13,12 @@ class PlayBoardGame
     @prompts = StringPrompts.new
   end
 
+
   def start
-    # Welcome, p or q?
+
     @prompts.initial_greeting
 
-    # User input valid? (=p)
+    # User prompted to play game
     @prompts.ask_user_input
     board_size = gets.chomp().to_i
 
@@ -43,43 +35,38 @@ class PlayBoardGame
     # User places ships
     @prompts.inquire_user_ship_placement
     @user.user_place_custom_ships(board_size)
-    # @user.user_place_ships(@cruiser)
 
 
-    # Same for submarine
-    # @prompts.inquire_submarine_placement
-    # @user.user_place_ships(@submarine)
-
-
-    ############# START TURN LOOP ################
+   #Turn loop started
     loop do
-      # Display 2 boards
+
       @prompts.display_computer_board
       puts @computer_board.render
 
       @prompts.display_user_board
       puts @user_board.render(true)
 
-      # Player turn
+      # Player fires upon computer
       @prompts.player_turn_to_fire_on
-
       @user.fire_upon_computer(@computer_board)
 
       @prompts.computer_turn_to_fire_on
 
+      #Computer fires upon player
       loop do
         @valid_computer_input = []
 
         # Select a valid coordinate randomly
         computer_shot_input = @computer_board.cells.keys.sample(1)
 
-        # The computer should not fire on a space that has already been fired on.
+        # Computer cannot fire upon cell already fired upon
         unless @user_board.cells[computer_shot_input[0]].fired_upon?
           @valid_computer_input << computer_shot_input[0]
           break
         end
       end
 
+      #Results of turn displayed
       @user_board.cells[@valid_computer_input[0]].fire_upon
 
       user_shot_result = ""
@@ -131,12 +118,25 @@ class PlayBoardGame
         puts "You won!"
         break
       end
-
     end
+    # Prompt user to play again
+    puts " "
+    puts "Would you like to play again? y or n"
+    play_again = gets.chomp.downcase
 
-  end
-
-end
+     if play_again == "y"
+        puts " "
+         game = PlayBoardGame.new()
+         game.setup
+         game.start
+         game.take_turn
+       else
+        puts " "
+         puts "Alright. Goodbye!"
+         exit
+       end
+     end
+   end
 
 game = PlayBoardGame.new()
 game.setup

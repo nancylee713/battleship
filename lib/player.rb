@@ -40,6 +40,7 @@ class Player
     result.flatten
   end
 
+
   def computer_place_ships(ship)
     computer_valid_coord = select_random_coordinates(ship)
     @board.place(ship, computer_valid_coord)
@@ -99,6 +100,7 @@ class Player
 
 
   def fire_upon_computer(computer_board)
+
     ready_to_fire = false
 
     until ready_to_fire
