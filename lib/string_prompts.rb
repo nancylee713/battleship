@@ -50,16 +50,12 @@ class StringPrompts
     puts "==============PLAYER BOARD=============="
   end
 
-
   def player_turn_to_fire_on
     puts "=" * 33
     puts "Enter the coordinate for your shot: \n"
   end
 
   def computer_turn_to_fire_on
-    # The computer should choose a random space on the board.
-    # The computer should not fire on a space that has already been fired on.
-
     puts "=" * 33
     puts "My turn >>"
   end

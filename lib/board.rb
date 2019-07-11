@@ -3,10 +3,12 @@ class Board
   attr_reader :cells
   attr_accessor :size
 
+
   def initialize(size=4)
     @size = size
     @cells = make_coordinates(@size)
   end
+
 
   def make_coordinates(size)
     size = @size
@@ -33,6 +35,7 @@ class Board
   def valid_coordinate?(coord)
     @cells.keys.include? coord
   end
+
 
   def valid_placement?(ship, arr_of_coords)
     valid_pool = make_coordinates(@size).keys
@@ -73,9 +76,6 @@ class Board
 
 
   def render(display_ship=false)
-    # cell_chars = %w[A B C D]
-    # cell_nums = %w[1 2 3 4]
-
     rows = []
     game_board = []
 
@@ -92,5 +92,4 @@ class Board
 
     game_board.tap(&:pop).map { |e| e + " " }.join("\n") + "\n"
   end
-
 end
