@@ -13,6 +13,7 @@ class PlayerTest < MiniTest::Test
     @tester_ship_1 = Ship.new("Tester_Ship_1",2)
     @tester_ship_2 = Ship.new("Tester_Ship_2",2)
     @computer = Player.new(@board)
+    @user = Player.new(@board)
 
   end
 
@@ -33,4 +34,5 @@ class PlayerTest < MiniTest::Test
     # test the length of a given ship matches # of random coordinates selected
     assert_equal @tester_ship_1.length, computer_choice.length
   end
+
 end

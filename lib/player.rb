@@ -46,17 +46,55 @@ class Player
     @board.place(ship, computer_valid_coord)
   end
 
-
-  def user_place_ships(ship)
+  def user_place_custom_ships(board_size)
     loop do
-      user_cruiser_input = gets.chomp().upcase.split
-      valid_input = @board.valid_placement?(ship, user_cruiser_input)
-      if valid_input
-        @board.place(ship, user_cruiser_input)
-        puts @board.render(true)
+      puts "What do you want to call your ship?"
+      user_ship_name = gets.chomp().capitalize
+
+      puts "How long is your ship?"
+      puts "** Note that it must fit the board size of your choice."
+      user_ship_length = gets.chomp().to_i
+
+        if user_ship_length > board_size
+          puts "Oops, your ship is too big for this board. Please try again!"
+          puts "How long is your ship?"
+          puts"** Note that it must fit the board size of your choice."
+          user_ship_length = gets.chomp().to_i
+        end
+
+      @ship = Ship.new(user_ship_name, user_ship_length)
+
+      puts "Where do you want to place your ship? (Ex. A1 B1 C1) "
+
+      valid_coords = false
+
+      until valid_coords
+        @user_ship_coords = gets.chomp().upcase.split
+        valid_spot = @board.valid_placement?(@ship, @user_ship_coords)
+
+        if !valid_spot
+          puts "Invalid coordinates. Please try again."
+        else
+          valid_coords = true
+        end
+      end
+
+      @board.place(@ship, @user_ship_coords)
+      puts @board.render(true)
+
+
+      puts "Do you want to make another ship? (y/n)"
+      user_input = gets.chomp().downcase
+
+      if ['y', 'n'].none? user_input
+        puts "Ooops, this isn't either yes or no. Please try again!"
+        puts "Do you want to make another ship? (y/n)"
+        user_input = gets.chomp().downcase
+      end
+
+      if user_input == 'n'
         break
       end
-      puts "Those are invalid coordinates. Please try again: \n>"
     end
   end
 
