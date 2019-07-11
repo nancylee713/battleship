@@ -9,7 +9,7 @@ require 'pry'
 class BoardTest < MiniTest::Test
 
   def setup
-    @board = Board.new
+    @board = Board.new(4)
     @cell = Cell.new("A1")
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
@@ -22,13 +22,16 @@ class BoardTest < MiniTest::Test
   end
 
   def test_board_is_a_hash
-
     assert_equal Hash, @board.cells.class
   end
 
   def test_board_contains_16_cells
-    binding.pry
     assert_equal 16, @board.cells.length
+  end
+
+  def test_it_can_generate_a_dynamic_board
+    dynamic_board = Board.new(7)
+    assert_equal 49, dynamic_board.cells.length
   end
 
   def test_key_points_to_cell_object

@@ -20,10 +20,6 @@ class PlayBoardGame
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
     @prompts = StringPrompts.new
-    @computer_board = Board.new
-    @computer = Player.new(@computer_board)
-    @user_board = Board.new
-    @user = Player.new(@user_board)
   end
 
   def start
@@ -32,6 +28,13 @@ class PlayBoardGame
 
     # User input valid? (=p)
     @prompts.ask_user_input
+    board_size = gets.chomp().to_i
+    # Set up board according to user input
+
+    @computer_board = Board.new(board_size)
+    @computer = Player.new(@computer_board)
+    @user_board = Board.new(board_size)
+    @user = Player.new(@user_board)
 
     #computer places ships
     @computer.computer_place_ships(@cruiser)

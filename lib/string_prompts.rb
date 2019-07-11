@@ -14,7 +14,7 @@ class StringPrompts
     user_input = gets.chomp().downcase
 
     if user_input == 'p'
-      puts "Setting up the board now ..."
+      determine_board_size
 
     elsif user_input == 'q'
       exit
@@ -23,6 +23,10 @@ class StringPrompts
       puts "That's not either p or q. Please enter your input again!"
       ask_user_input
     end
+  end
+
+  def determine_board_size
+    puts "Please specify the board size greater than 3 >> ex) 4 "
   end
 
   def inquire_cruiser_placement
